@@ -5,7 +5,7 @@
         "m_Name": "FBX Export Settings",
         "m_EditorClassIdentifier": "",
         "Verbose": false,
-        "launchAfterInstallation": true,
+        "launchAfterInstallation": false,
         "HideSendToUnityMenu": true,
         "BakeAnimation": false,
         "showConvertToPrefabDialog": true,

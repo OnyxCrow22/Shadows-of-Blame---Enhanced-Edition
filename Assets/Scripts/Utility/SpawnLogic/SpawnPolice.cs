@@ -20,6 +20,7 @@ public class SpawnPolice : MonoBehaviour
         StartCoroutine(PolicePedestrians());
         police = newPolicePedestrian.GetComponent<PoliceMovementSM>();
     }
+
     public IEnumerator PolicePedestrians()
     {
         int policePedestriansCount = 0;

@@ -7,22 +7,36 @@ public class WeaponWheelSystem : MonoBehaviour
     public WeaponWheelController weapons;
     public GameObject MainUI;
     public GameObject WeaponWheelPanel;
+    public enum currentWeap { open, closed};
+    private currentWeap weaponState;
+    public bool open, closed;
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            if (!weapons.weaponWheelSelected)
+            switch (weaponState)
             {
-                weapons.WeaponWheel();
-                MainUI.SetActive(false);
-                WeaponWheelPanel.SetActive(true);
-            }
-            else
-            {
-                weapons.CloseWheel();
-                MainUI.SetActive(true);
-                WeaponWheelPanel.SetActive(false);
+                case currentWeap.closed:
+                    {
+                        weapons.WeaponWheel();
+                        MainUI.SetActive(false);
+                        WeaponWheelPanel.SetActive(true);
+                        open = true;
+                        closed = false;
+                        weaponState = currentWeap.open;
+                    }
+                    break;
+                case currentWeap.open:
+                    {
+                        weapons.CloseWheel();
+                        MainUI.SetActive(true);
+                        WeaponWheelPanel.SetActive(false);
+                        open = false;
+                        closed = true;
+                        weaponState = currentWeap.closed;
+                    }
+                    break;
             }
         }
     }

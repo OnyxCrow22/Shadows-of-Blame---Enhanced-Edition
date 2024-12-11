@@ -8,6 +8,8 @@ public class ThrowGrenade : MonoBehaviour
     public float throwForce = 40;
     public GameObject grenade;
     public PlayerMovementSM playsm;
+    public enum ThrowState { notReady, ready};
+    private ThrowState currentThrow;
     public float delay = 20;
 
     private void Update()
@@ -17,6 +19,24 @@ public class ThrowGrenade : MonoBehaviour
 
     void InputCheck()
     {
+        switch (currentThrow)
+        {
+            case ThrowState.ready:
+                {
+                    Throw();
+                    playsm.throwingGrenade = true;
+                    playsm.hasThrownGrenade = true;
+                    currentThrow = ThrowState.ready;
+                    break;
+                }
+            case ThrowState.notReady:
+                {
+                    playsm.throwingGrenade = false;
+                    currentThrow = ThrowState.notReady;
+                    break;
+                }
+        }
+        /*
         if (Input.GetKeyDown(KeyCode.G) && !playsm.weapon.gunEquipped)
         {
             Throw();
@@ -28,6 +48,7 @@ public class ThrowGrenade : MonoBehaviour
         {
             playsm.throwingGrenade = false;
         }
+        */
 
         delay -= Time.deltaTime;
 

@@ -38,6 +38,7 @@ public class FollowWaypoints : MonoBehaviour
         if (agent.CompareTag("FemaleNPC") || agent.CompareTag("MaleNPC") || agent.CompareTag("Police"))
         {
             pedestrianDest = GameObject.FindGameObjectsWithTag("PedDests");
+            AI = GetComponent<NPCMovementSM>();
         }
     }
 

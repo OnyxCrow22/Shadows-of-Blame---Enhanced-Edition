@@ -1,5 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
+using System.Runtime.CompilerServices;
+using System.Runtime.Serialization.Json;
 using UnityEngine;
 
 public class TrafficLight : MonoBehaviour
@@ -8,23 +11,125 @@ public class TrafficLight : MonoBehaviour
     public Light[] redLights;
     public Light[] greenLights;
     public Light[] amberLights;
-    public bool green, amber, red;
+
+    private enum trafficState { Red, Green, Amber, RedAmber };
+    private trafficState currentState;
+    private float timer;
+    private float greenTime = 10;
+    private float amberTime = 2;
+    private float redTime = 8;
+    private float redAmberTime = 2;
+
+    public bool red, green, amber, redAmber;
 
     private void Start()
     {
         if (!reversed)
         {
-            StartCoroutine("Traffic");
+            currentState = trafficState.Red;
             Lights(redLights, true);
+            red = true;
         }
         else if (reversed)
         {
-            StartCoroutine("ReversedTraffic");
+            currentState = trafficState.Green;
             Lights(greenLights, true);
+            green = true;
         }
     }
 
-    public IEnumerator Traffic()
+    private void Update()
+    {
+        timer += Time.deltaTime;
+
+        switch (currentState)
+        {
+            case trafficState.Red:
+                {
+                    if (timer >= redTime)
+                    {
+                        SwitchRedAmber();
+                    }
+                    break;
+                }
+            case trafficState.RedAmber:
+                {
+                    if (timer >= redAmberTime)
+                    {
+                        SwitchGreen();
+                    }
+                    break;
+                }
+            case trafficState.Green:
+                {
+                    if (timer >= greenTime)
+                    {
+                        SwitchAmber();
+                    }
+                }
+                break;
+            case trafficState.Amber:
+                {
+                    if (timer >= amberTime)
+                    {
+                        SwitchRed();
+                    }
+                }
+                break;
+
+        }
+    }
+
+    public void SwitchRed()
+    {
+        Lights(amberLights, false);
+        Lights(greenLights, false);
+        Lights(redLights, true);
+        currentState = trafficState.Red;
+        green = false;
+        amber = false;
+        red = true;
+        timer = 0;
+    }
+    
+    public void SwitchAmber()
+    {
+        Lights(amberLights, true);
+        Lights(greenLights, false);
+        Lights(redLights, false);
+        green = false;
+        amber = true;
+        red = false;
+        currentState = trafficState.Amber;
+        timer = 0;
+    }
+
+    public void SwitchGreen()
+    {
+        Lights(amberLights, false);
+        Lights(greenLights, true);
+        Lights(redLights, false);
+        green = true;
+        amber = false; 
+        red = false;
+        currentState = trafficState.Green;
+        timer = 0;
+    }
+
+    public void SwitchRedAmber()
+    {
+        Lights(amberLights, true);
+        Lights(greenLights, false);
+        Lights(redLights, true);
+        green = false;
+        red = true;
+        amber = true;
+        currentState = trafficState.RedAmber;
+        timer = 0;
+    }
+
+    /*
+    public IEnumerator TrafficA()
     {
         while (true)
         {
@@ -78,6 +183,7 @@ public class TrafficLight : MonoBehaviour
             green = true;
         }
     }
+    */
 
     public void Lights(Light[] trafficLight, bool isActive)
     {

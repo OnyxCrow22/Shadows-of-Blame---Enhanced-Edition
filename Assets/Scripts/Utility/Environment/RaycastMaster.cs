@@ -11,6 +11,17 @@ public class RaycastMaster : MonoBehaviour
     public OnTheRun OTR;
     public WestralWoes WW;
     public VehicleEnterExit vehicular;
+    Door doorS;
+    CollectEvidence collectEvidence;
+    WWCollectHParkEvidence HParkEvidence;
+    WWCollectPrescottEvidence prescottEvidence;
+    GangEvidenceCollect gECollect;
+    WWNorthbyGangEvidence northbyCollect;
+    WWNorthBeachEvidence northBeachCollect;
+    EvidencePlace placeEvidence;
+    WWPlaceEvidence finalEvidence;
+    Lift newLift;
+    LiftCall callLift;
 
     public bool door = false;
     public bool evidence = false;
@@ -45,7 +56,7 @@ public class RaycastMaster : MonoBehaviour
             if (doorHit.collider.CompareTag("Door"))
             {
                 door = true;
-                Door doorS = doorHit.collider.gameObject.GetComponent<Door>();
+                doorS = doorHit.collider.gameObject.GetComponent<Door>();
                 interactKey.SetActive(true);
                 if (Input.GetKeyDown(KeyCode.E) && doorS.isOpen)
                 {
@@ -79,7 +90,7 @@ public class RaycastMaster : MonoBehaviour
         {
             if (carDoorHit.collider.gameObject.tag == "VehicleDoor")
             {
-                VehicleEnterExit vehicular = carDoorHit.collider.gameObject.GetComponent<VehicleEnterExit>();
+                vehicular = carDoorHit.collider.gameObject.GetComponent<VehicleEnterExit>();
                 interactKey.SetActive(true);
                 vehicular.canEnter = true;
                 if (Input.GetKeyDown(KeyCode.E) && !vehicular.inVehicle)
@@ -113,7 +124,7 @@ public class RaycastMaster : MonoBehaviour
         {
             if (evidenceHit.collider.gameObject.tag == "Evidence")
             {
-                CollectEvidence collectEvidence = evidenceHit.collider.gameObject.GetComponent<CollectEvidence>();
+                collectEvidence = evidenceHit.collider.gameObject.GetComponent<CollectEvidence>();
                 Debug.Log("HIT THE EVIDENCE!");
                 interactKey.SetActive(true);
                 if (Input.GetKeyDown(KeyCode.E) && !collectEvidence.reading)
@@ -138,7 +149,7 @@ public class RaycastMaster : MonoBehaviour
         {
             if (evidenceHit.collider.gameObject.tag == "HParkEvidence")
             {
-                WWCollectHParkEvidence HParkEvidence = evidenceHit.collider.gameObject.GetComponent<WWCollectHParkEvidence>();
+                HParkEvidence = evidenceHit.collider.gameObject.GetComponent<WWCollectHParkEvidence>();
                 Debug.Log("HIT THE EVIDENCE!");
                 interactKey.SetActive(true);
                 if (Input.GetKeyDown(KeyCode.E) && !HParkEvidence.reading)
@@ -163,7 +174,7 @@ public class RaycastMaster : MonoBehaviour
         {
             if (evidenceHit.collider.gameObject.tag == "PrescottEvidence")
             {
-                WWCollectPrescottEvidence prescottEvidence = evidenceHit.collider.gameObject.GetComponent<WWCollectPrescottEvidence>();
+                prescottEvidence = evidenceHit.collider.gameObject.GetComponent<WWCollectPrescottEvidence>();
                 Debug.Log("HIT THE EVIDENCE!");
                 interactKey.SetActive(true);
                 if (Input.GetKeyDown(KeyCode.E) && !prescottEvidence.reading)
@@ -188,7 +199,7 @@ public class RaycastMaster : MonoBehaviour
         {
             if (gEvidencehit.collider.gameObject.tag == "GEvidence")
             {
-                GangEvidenceCollect gECollect = gEvidencehit.collider.gameObject.GetComponent<GangEvidenceCollect>();
+                gECollect = gEvidencehit.collider.gameObject.GetComponent<GangEvidenceCollect>();
                 Debug.Log("Evidence hit!");
                 interactKey.SetActive(true);
                 if (Input.GetKeyDown(KeyCode.E) && !gECollect.isgReading)
@@ -213,7 +224,7 @@ public class RaycastMaster : MonoBehaviour
         {
             if (gEvidencehit.collider.gameObject.tag == "NorthbyEvidence")
             {
-                WWNorthbyGangEvidence northbyCollect = gEvidencehit.collider.gameObject.GetComponent<WWNorthbyGangEvidence>();
+                northbyCollect = gEvidencehit.collider.gameObject.GetComponent<WWNorthbyGangEvidence>();
                 Debug.Log("Evidence hit!");
                 interactKey.SetActive(true);
                 if (Input.GetKeyDown(KeyCode.E) && !northbyCollect.isgReading)
@@ -237,7 +248,7 @@ public class RaycastMaster : MonoBehaviour
         {
             if (NorthBeachHit.collider.gameObject.tag == "NorthBeachEvidence")
             {
-                WWNorthBeachEvidence northBeachCollect = NorthBeachHit.collider.gameObject.GetComponent<WWNorthBeachEvidence>();
+                northBeachCollect = NorthBeachHit.collider.gameObject.GetComponent<WWNorthBeachEvidence>();
                 Debug.Log("Evidence hit!");
                 interactKey.SetActive(true);
                 if (Input.GetKeyDown(KeyCode.E) && !northBeachCollect.isgReading)
@@ -262,7 +273,7 @@ public class RaycastMaster : MonoBehaviour
         {
             if (placeHit.collider.gameObject.tag == "EvidenceBoard" && OTR.GangEvidence && OTR.enabled)
             {
-                EvidencePlace placeEvidence = placeHit.collider.gameObject.GetComponent<EvidencePlace>();
+                placeEvidence = placeHit.collider.gameObject.GetComponent<EvidencePlace>();
                 Debug.Log("Board hit!");
                 interactKey.SetActive(true);
                 if (Input.GetKeyDown(KeyCode.E) && !placeEvidence.EvidencePlaced)
@@ -274,7 +285,7 @@ public class RaycastMaster : MonoBehaviour
             }
             if (placeHit.collider.CompareTag("WesteriaEvidenceBoard") && WW.collectedNorthBeachEvidence && WW.enabled)
             {
-                WWPlaceEvidence finalEvidence = placeHit.collider.gameObject.GetComponent<WWPlaceEvidence>();
+                finalEvidence = placeHit.collider.gameObject.GetComponent<WWPlaceEvidence>();
                 Debug.Log("Final board hit!");
                 interactKey.SetActive(true);
                 if (Input.GetKeyDown(KeyCode.E) && !finalEvidence.EvidencePlaced)
@@ -297,7 +308,7 @@ public class RaycastMaster : MonoBehaviour
         {
             if (liftHit.collider.tag == "LiftObj")
             {
-                Lift newLift = liftHit.collider.gameObject.GetComponent<Lift>();
+                newLift = liftHit.collider.gameObject.GetComponent<Lift>();
                 Debug.Log("Going up or down?");
                 interactKey.SetActive(true);
                 if (Input.GetKeyDown(KeyCode.E))
@@ -316,14 +327,14 @@ public class RaycastMaster : MonoBehaviour
                         interactKey.SetActive(false);
                         buttonPressed = true;
                         inLift = true;
-                        Debug.Log("Please stand clear of the doors. We are now going up to the ground floor.");
+                        Debug.Log("Please stand clear of the doors. We are now going down to the ground floor.");
                     }
                 }
             }
 
             if (liftHit.collider.tag == "Button")
             {
-                LiftCall callLift = liftHit.collider.gameObject.GetComponent<LiftCall>();
+                callLift = liftHit.collider.gameObject.GetComponent<LiftCall>();
                 interactKey.SetActive(true);
                 if (Input.GetKeyDown(KeyCode.E))
                 {
