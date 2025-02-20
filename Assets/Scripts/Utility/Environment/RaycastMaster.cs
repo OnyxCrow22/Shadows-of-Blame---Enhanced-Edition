@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Rendering;
 using UnityEngine;
 
 public class RaycastMaster : MonoBehaviour
@@ -23,12 +20,20 @@ public class RaycastMaster : MonoBehaviour
     Lift newLift;
     LiftCall callLift;
 
+    RoadCheck roads;
+    DistrictCheck districts;
+    VehicleCheck vehicles;
+
     public bool door = false;
     public bool evidence = false;
     public bool carDoor = false;
     public bool board = false;
     public bool buttonPressed = false;
     public bool inLift = false;
+
+    public bool onRoad = false;
+    public bool inDistrict = false;
+    public bool inVehicle = false;
 
     // Update is called once per frame
     void Update()
@@ -43,6 +48,7 @@ public class RaycastMaster : MonoBehaviour
         NorthBeachEvidenceCollect();
         PlaceEvidenceOnBoard();
         LiftOperate();
+        NameChecker();
     }
 
     public void DoorHandling()
@@ -351,6 +357,44 @@ public class RaycastMaster : MonoBehaviour
                         interactKey.SetActive(false);
                     }
                 }
+            }
+        }
+    }
+
+    public void NameChecker()
+    {
+        Ray nameRay = new Ray(transform.position, Vector3.down);
+        Debug.DrawRay(transform.position, Vector3.down, Color.red);
+        float nameLength = 24;
+        if (Physics.Raycast(nameRay, out RaycastHit nameHit, nameLength))
+        {
+            // Does the Raycast hit any gameObjects with the tag "Road?
+            if (nameHit.collider.gameObject.tag == "Road")
+            {
+                // Update the road accordingly.
+                roads = nameHit.collider.gameObject.GetComponent<RoadCheck>();
+                roads.currentRoad.text = roads.roadName;
+                onRoad = true;
+                Debug.Log("I hit " + roads.currentRoad);
+            }
+            else if (nameHit.collider.gameObject.tag == "District")
+            {
+                districts = nameHit.collider.gameObject.GetComponent<DistrictCheck>();
+                districts.currentDistrict.text = districts.districtName;
+                inDistrict = true;
+                Debug.Log("Welcome to " + districts.districtName);
+            }
+            else if (nameHit.collider.gameObject.tag == "Vehicle")
+            {
+                vehicles = nameHit.collider.gameObject.GetComponent<VehicleCheck>();
+                vehicles.currentVehicle.text = vehicles.vehicleName;
+                inVehicle = true;
+                Debug.Log("You are currently driving" + vehicles.currentVehicle);
+            }
+            else
+            {
+                roads.currentRoad.text = "";
+                onRoad = false;
             }
         }
     }
