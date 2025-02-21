@@ -16,7 +16,7 @@ public class DistrictCheck : MonoBehaviour
 
     public void CheckPlayer()
     {
-        currentDistrict.text = distrctName;
+        currentDistrict.text = districtName;
         inDistrict = true;
     }
 }

@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using System.Collections;
 
 public class RoadCheck : MonoBehaviour
 {
@@ -7,6 +8,8 @@ public class RoadCheck : MonoBehaviour
     public string roadName;
     public bool onRoad;
     public RaycastMaster rMaster;
+
+    public Animator roadDisp;
     
     public void Start()
     {
@@ -14,9 +17,16 @@ public class RoadCheck : MonoBehaviour
         onRoad = false;
     }
 
-    public void CheckPlayer()
+    public IEnumerator RoadDisplay()
     {
+        roadDisp.SetBool("showName", true);
+
         currentRoad.text = roadName;
-        onRoad = true;
+        
+        yield return new WaitForSeconds(3);
+
+        currentRoad.text = "";
+
+        roadDisp.SetBool("showName", false);
     }
 }

@@ -6,6 +6,10 @@ using UnityEngine.AI;
 public class PoliceLevel : MonoBehaviour
 {
     public GameObject[] levels;
+
+    public enum policeState {normal, searching, pursuit}
+
+    public policeState currentState;
     public GameObject policeBorder;
     public bool addingLevel;
     public static int policeLevels;

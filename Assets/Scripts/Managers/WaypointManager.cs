@@ -16,12 +16,16 @@ public class WaypointManager : MonoBehaviour
     [Header("Waypoint References")]
     public GameObject[] waypoints;
     public GameObject[] pavementNodes;
-    public Link[] links;
+    public List<Link> links = new List<Link>();
     public Graph graph = new Graph();
 
     // Start is called before the first frame update
     void Start()
     {
+
+        waypoints = GameObject.FindGameObjectsWithTag("Waypoint");
+        pavementNodes = GameObject.FindGameObjectsWithTag("PedestrianNodes");
+
         if (waypoints.Length > 0)
         {
             foreach (GameObject waypoints in waypoints)
@@ -46,6 +50,27 @@ public class WaypointManager : MonoBehaviour
             }
         }
 
-        pavementNodes = GameObject.FindGameObjectsWithTag("PedestrianNodes");
+        Linker();
+
+        foreach (Link lk in links)
+        {
+            graph.AddEdge(lk.lastNode, lk.nextNode);
+            if (lk.dirCheck == Link.direction.TWOWAY)
+            {
+                graph.AddEdge(lk.nextNode, lk.lastNode);
+            }
+        }
+    }
+
+    void Linker()
+    {
+        for (int i = 0; i < waypoints.Length - 1; i++)
+        {
+            Link newLink = new Link();
+            newLink.lastNode = waypoints[i];
+            newLink.nextNode = waypoints[i + 1];
+            newLink.dirCheck = Link.direction.TWOWAY;
+            links.Add(newLink);
+        }
     }
 }

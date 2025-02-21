@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class RaycastMaster : MonoBehaviour
@@ -373,9 +374,12 @@ public class RaycastMaster : MonoBehaviour
             {
                 // Update the road accordingly.
                 roads = nameHit.collider.gameObject.GetComponent<RoadCheck>();
-                roads.currentRoad.text = roads.roadName;
                 onRoad = true;
-                Debug.Log("I hit " + roads.currentRoad);
+                if (Input.GetKeyDown(KeyCode.Z))
+                {
+                    roads.StartCoroutine(roads.RoadDisplay());
+                    Debug.Log("I hit " + roads.currentRoad);
+                }
             }
             else if (nameHit.collider.gameObject.tag == "District")
             {
@@ -390,11 +394,6 @@ public class RaycastMaster : MonoBehaviour
                 vehicles.currentVehicle.text = vehicles.vehicleName;
                 inVehicle = true;
                 Debug.Log("You are currently driving" + vehicles.currentVehicle);
-            }
-            else
-            {
-                roads.currentRoad.text = "";
-                onRoad = false;
             }
         }
     }

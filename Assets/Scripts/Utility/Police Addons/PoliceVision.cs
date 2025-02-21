@@ -44,7 +44,7 @@ public class PoliceVision : MonoBehaviour
 
     private IEnumerator SearchForPlayer()
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(50);
 
         if (!playerSpotted)
         {

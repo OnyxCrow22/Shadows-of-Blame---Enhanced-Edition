@@ -52,7 +52,6 @@ public class Graph
 
         List<Node> open = new List<Node>();
         List<Node> closed = new List<Node>();
-        float tentative_g_score = 0;
         bool tentative_is_better;
 
         start.g = 0;
@@ -81,7 +80,7 @@ public class Graph
                 if (closed.IndexOf(neighbour) > -1)
                     continue;
 
-                tentative_g_score = thisNode.g + distance(thisNode, neighbour);
+                float tentative_g_score = thisNode.g + distance(thisNode, neighbour);
                 if (open.IndexOf(neighbour) == -1)
                 {
                     open.Add(neighbour);
@@ -122,18 +121,17 @@ public class Graph
 
     float distance(Node a, Node b)
     {
-        return(Vector3.SqrMagnitude(a.getID().transform.position - b.getID().transform.position));
+        return Vector3.SqrMagnitude(a.getID().transform.position - b.getID().transform.position);
     }
 
     int lowestF(List<Node> l)
     {
-        float lowestF = 0;
         int count = 0;
         int iteratorCount = 0;
 
-        lowestF = l[0].f;
+        float lowestF = l[0].f;
 
-        for(int i = 1; i < l.Count; i++)
+        for (int i = 1; i < l.Count; i++)
         {
             if (l[i].f <= lowestF)
             {
