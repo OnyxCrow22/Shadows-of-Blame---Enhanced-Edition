@@ -14,6 +14,8 @@ public class FollowWaypoints : MonoBehaviour
     [HideInInspector]
     public GameObject currentPedestrianNode;
     public NPCMovementSM AI;
+
+    public PoliceMovementSM police;
     public NavMeshAgent agent;
     Graph g;
     int randomDestIndex;
@@ -28,6 +30,8 @@ public class FollowWaypoints : MonoBehaviour
         currentDestinationNode = waypoints[0];
         agent = GetComponent<NavMeshAgent>();
 
+        destination = GameObject.FindGameObjectsWithTag("Destination");
+
         Invoke("AssignRandomDestination", 2);
     }
 
@@ -35,9 +39,15 @@ public class FollowWaypoints : MonoBehaviour
     {
         waypointManager = GameObject.FindGameObjectWithTag("W");
 
-        if (agent.CompareTag("FemaleNPC") || agent.CompareTag("MaleNPC") || agent.CompareTag("Police"))
+        if (agent.CompareTag("FemaleNPC") || agent.CompareTag("MaleNPC"))
         {
             pedestrianDest = GameObject.FindGameObjectsWithTag("PedDests");
+            AI = GetComponent<NPCMovementSM>();
+        }
+        else if (agent.CompareTag("Police"))
+        {
+            pedestrianDest = GameObject.FindGameObjectsWithTag("PedDests");
+            police = GetComponent<PoliceMovementSM>();
             AI = GetComponent<NPCMovementSM>();
         }
     }

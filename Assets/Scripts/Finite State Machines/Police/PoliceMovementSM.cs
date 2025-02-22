@@ -45,6 +45,10 @@ public class PoliceMovementSM : PoliceStateMachine
         // meleeState = new PoliceAttack(this);
 
         policing = FindFirstObjectByType<PoliceLevel>();
+
+        player = GameObject.FindGameObjectWithTag("Player");
+
+        playsm = player.GetComponent<PlayerMovementSM>();
     }
 
     protected override PoliceBaseState GetInitialState()

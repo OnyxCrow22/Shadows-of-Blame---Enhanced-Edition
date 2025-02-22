@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using System.Collections;
+using System.Net.Security;
 
 public class RoadCheck : MonoBehaviour
 {
@@ -9,24 +10,51 @@ public class RoadCheck : MonoBehaviour
     public bool onRoad;
     public RaycastMaster rMaster;
 
+    public bool showing;
+    public bool autoShow;
     public Animator roadDisp;
     
     public void Start()
     {
-        currentRoad.text = "";
         onRoad = false;
+        showing = false;
+        autoShow = false;
+        roadDisp.enabled = false;
     }
 
-    public IEnumerator RoadDisplay()
+    public IEnumerator RoadDisplay(bool manual = false)
     {
+        if (showing)
+        {
+            yield break;
+        }
+
+        if (!manual && autoShow)
+        {
+            yield break;
+        }
+
+        showing = true;
+
+        if (!manual)
+        {
+            autoShow = true;
+        }
+
+        roadDisp.enabled = true;
+
         roadDisp.SetBool("showName", true);
 
         currentRoad.text = roadName;
         
         yield return new WaitForSeconds(3);
 
-        currentRoad.text = "";
-
         roadDisp.SetBool("showName", false);
+
+        yield return new WaitForSeconds(3);
+
+        roadDisp.enabled = false;
+
+        showing = false;
     }
 }

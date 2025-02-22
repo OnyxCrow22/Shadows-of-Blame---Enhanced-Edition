@@ -1,7 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class CarController : MonoBehaviour
@@ -49,10 +47,13 @@ public class CarController : MonoBehaviour
     [Header("UI Elements")]
     public RectTransform needle;
     public GameObject speedometer;
+    RaycastMaster rMaster;
+
 
     private void Start()
     {
         currentSpeed = 0;
+        rMaster = FindFirstObjectByType<RaycastMaster>();
     }
 
     public void FixedUpdate()
@@ -84,7 +85,6 @@ public class CarController : MonoBehaviour
     {
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
-
 
         if (Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.S) && verticalInput <= 0 && !braking && currentSpeed > 0)
         {
@@ -136,6 +136,11 @@ public class CarController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R) && vehicleonSide)
         {
             FlipCar();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Z) && rMaster.onRoad)
+        {
+            rMaster.NameChecker();
         }
     }
 

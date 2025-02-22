@@ -7,11 +7,14 @@ public class VehicleCheck : MonoBehaviour
     public string vehicleName;
     public bool inVehicle;
     public RaycastMaster rMaster;
+
+    public Animator vehicleDisp;
     
     public void Start()
     {
         currentVehicle.text = "";
         inVehicle = false;
+        rMaster = GameObject.FindGameObjectWithTag("Player").GetComponent<RaycastMaster>();
     }
 
     public void CheckPlayer()

@@ -84,12 +84,12 @@ public class DayNightCycle : MonoBehaviour
 
         if (sunLightData != null)
         {
-            sunLightData.intensity = sunintensityCurve * sunIntensity;
+            sunLight.intensity = sunintensityCurve * sunIntensity;
         }
 
         if (moonLightData != null)
         {
-            moonLightData.intensity = moonintensityCurve * moonIntensity;
+            moonLight.intensity = moonintensityCurve * moonIntensity;
         }
 
         float suntemperatureMultipler = sunlightTemperatureCurve.Evaluate(normalizedTime);
