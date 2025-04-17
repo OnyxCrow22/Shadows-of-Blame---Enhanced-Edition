@@ -21,6 +21,7 @@ public class CarController : MonoBehaviour
     public Light leftIndicator, rightIndicator;
     public Light rearLight1, rearLight2;
     public Light[] reverseLight;
+    public PlayerControls pControls;
 
     [Header("Wheel colliders")]
     public WheelCollider frontDriverW, frontPassengerW;
@@ -48,6 +49,20 @@ public class CarController : MonoBehaviour
     public GameObject speedometer;
     RaycastMaster rMaster;
 
+    void Awake()
+    {
+        pControls = new PlayerControls();
+    }
+
+    void OnEnable()
+    {
+        pControls.Enable();
+    }
+
+    void OnDisable()
+    {
+        pControls.Disable();   
+    }
 
     private void Start()
     {
@@ -82,62 +97,66 @@ public class CarController : MonoBehaviour
 
     public void GetInput()
     {
-        horizontalInput = Input.GetAxisRaw("Horizontal");
-        verticalInput = Input.GetAxisRaw("Vertical");
+       // horizontalInput = pControls.Driving.Accelerate.ReadValue<float>();
+        verticalInput = pControls.Driving.Accelerate.ReadValue<float>();
 
-        if (Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.S) && verticalInput <= 0 && !braking && currentSpeed > 0)
+        if (pControls.Driving.Accelerate.IsPressed() && verticalInput > 0)
+        {
+            Accelerate();
+        }
+
+        if (pControls.Driving.Brake.IsPressed() && verticalInput <= 0 && !braking && currentSpeed > 0)
         {
             Brake();
             braking = true;
         }
 
-        else if (verticalInput >= 0.01f)
+        else if (verticalInput > 0.1f)
         {
             braking = false;
         }
 
-        if (verticalInput == -1f && braking && currentSpeed <= 0.02)
+        if (verticalInput < 0.11f)
         {
             Reverse();
             reversing = true;
             braking = false;
-            negative = true;
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftBracket) && !turningLeft && pressCount == 1)
+        if (pControls.Driving.LeftIndicator.IsPressed() && !turningLeft && pressCount == 1)
         {
             TurnIndicators();
             turningLeft = true;
             indicating = true;
             pressCount += 1;
         }
-        else if (Input.GetKeyDown(KeyCode.LeftBracket) && turningLeft && pressCount == 2)
+        else if (!pControls.Driving.LeftIndicator.IsPressed() && turningLeft && pressCount == 2)
         {
             turningLeft = false;
             indicating = false;
             pressCount -= 1;
         }
 
-        if (Input.GetKeyDown(KeyCode.RightBracket) && !turningRight && pressCount == 1)
+        if (pControls.Driving.RightIndicator.IsPressed() && !turningRight && pressCount == 1)
         {
             TurnIndicators();
             turningRight = true;
             indicating = true;
             pressCount += 1;
         }
-        else if (Input.GetKeyDown(KeyCode.RightBracket) && turningRight && pressCount == 2)
+        else if (!pControls.Driving.RightIndicator.IsPressed() && turningRight && pressCount == 2)
         {
             turningRight = false;
             indicating = false;
             pressCount -= 1;
         }
 
-        if (Input.GetKeyDown(KeyCode.R) && vehicleonSide)
+        if (pControls.Driving.FlipCar.IsPressed() && vehicleonSide)
         {
             FlipCar();
         }
 
-        if (Input.GetKeyDown(KeyCode.Z) && rMaster.onRoad)
+        if (pControls.Driving.RevealInfo.IsPressed() && rMaster.onRoad)
         {
             rMaster.NameChecker();
         }
@@ -156,6 +175,7 @@ public class CarController : MonoBehaviour
 
     private void Steer()
     {
+        horizontalInput = pControls.Driving.Steer.ReadValue<Vector2>().x;
         steeringAngle = maxSteeringAngle * horizontalInput;
         frontDriverW.steerAngle = steeringAngle;
         frontPassengerW.steerAngle = steeringAngle;
@@ -193,7 +213,7 @@ public class CarController : MonoBehaviour
 
     private void Reverse()
     {
-        if (verticalInput == -1f && reversing && !braking && currentSpeed >= 0.01 && negative)
+        if (verticalInput <= 0.1 && reversing && !braking)
         {
             frontDriverW.motorTorque = verticalInput * motorForce;
             frontPassengerW.motorTorque = verticalInput * motorForce;
@@ -204,7 +224,7 @@ public class CarController : MonoBehaviour
             reverseLight[1].gameObject.SetActive(true);
         }
         // No longer reversing, turn off lights.
-        else if (verticalInput >= 0f) 
+        else if (verticalInput > 0.1) 
         {
             reverseLight[0].gameObject.SetActive(false);
             reverseLight[1].gameObject.SetActive(false);
@@ -215,6 +235,7 @@ public class CarController : MonoBehaviour
 
     private void FlipCar()
     {
+
     }
 
     private void TurnIndicators()

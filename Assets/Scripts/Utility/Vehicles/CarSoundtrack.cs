@@ -14,21 +14,23 @@ public class CarSoundtrack : MonoBehaviour
     int songSelect;
     public TextMeshProUGUI songName;
     public bool canPlayRadio = false;
+    
+    public PlayerControls pControls;
 
     private void Update()
     {
-        if (playsm.inVehicle && Input.GetKeyDown(KeyCode.I))
+        if (playsm.inVehicle && pControls.Driving.PlaySong.IsPressed())
         {
             StartCoroutine(PlaySong());
             canPlayRadio = true;
         }
 
-        if (playsm.inVehicle && Input.GetKeyDown(KeyCode.O))
+        if (playsm.inVehicle && pControls.Driving.SkipSong.IsPressed())
         {
             StartCoroutine(SkipSong());
         }
 
-        if (playsm.inVehicle && Input.GetKeyDown(KeyCode.P))
+        if (playsm.inVehicle && pControls.Driving.StopSong.IsPressed())
         {
             StartCoroutine(StopSong());
             canPlayRadio = false;
@@ -39,6 +41,21 @@ public class CarSoundtrack : MonoBehaviour
             StartCoroutine(StopSong());
             canPlayRadio = false;
         }
+    }
+
+    void Awake()
+    {
+        pControls = new PlayerControls();
+    }
+
+    void OnEnable()
+    {
+        pControls.Enable();
+    }
+
+    void OnDisable()
+    {
+        pControls.Disable();   
     }
 
     IEnumerator PlaySong()

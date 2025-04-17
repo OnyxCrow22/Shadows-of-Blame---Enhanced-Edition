@@ -50,10 +50,10 @@ public class Gun : MonoBehaviour
 
     private void InputCheck()
     {
-        if (allowButtonHold && gunEquipped) shooting = Input.GetKey(KeyCode.Mouse0);
-        else shooting = Input.GetKeyDown(KeyCode.Mouse0);
+        if (allowButtonHold && gunEquipped) shooting = playsm.pControls.Player.Attack.IsPressed();
+        else shooting = playsm.pControls.Player.Attack.IsPressed();
 
-        if (Input.GetKeyDown(KeyCode.R) && bulletsLeft < magazineSize && !reloading || Input.GetKey(KeyCode.Mouse0) && bulletsLeft == 0 && !reloading)
+        if (playsm.pControls.Player.Reload.IsPressed() && bulletsLeft < magazineSize && !reloading || playsm.pControls.Player.Attack.IsPressed() && bulletsLeft == 0 && !reloading)
         {
             // Reloads the gun, takes the totalAmmo away from how many shots were fired, and resets the bullet and bulletsShot count to zero.
             ReloadGun();
@@ -71,19 +71,19 @@ public class Gun : MonoBehaviour
             ShootGun();
         }
 
-        if (Input.GetMouseButton(1) && !aiming && gunEquipped)
+        if (playsm.pControls.Player.Aiming.IsPressed() && !aiming && gunEquipped)
         {
             // Aims the gun.
             Aiming();
             aiming = true;
         }
 
-        if (Input.GetKey(KeyCode.Mouse0) && shooting && aiming && gunEquipped)
+        if (playsm.pControls.Player.Attack.IsPressed() && shooting && aiming && gunEquipped)
         {
             playsm.anim.SetBool("shoot", true);
         } 
 
-        if (!Input.GetMouseButton(1) && aiming && gunEquipped)
+        if (!playsm.pControls.Player.Aiming.IsPressed() && aiming && gunEquipped)
         {
             aiming = false;
             fpsCam.gameObject.SetActive(true);
@@ -91,7 +91,7 @@ public class Gun : MonoBehaviour
             playsm.anim.SetBool("aiming", false);
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha2) && gunEquipped && pressCount == 1 && !aiming)
+        if (playsm.pControls.Player.EquipGun.IsPressed() && gunEquipped && pressCount == 1 && !aiming)
         {
             gun.SetActive(false);
             reticle.SetActive(false);

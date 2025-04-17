@@ -5,6 +5,7 @@ public class Idle : PlayerBaseState
     float horizontalInput;
     float verticalInput;
     private PlayerMovementSM playsm;
+    bool crouched;
 
     public Idle(PlayerMovementSM playerStateMachine) : base("Idle", playerStateMachine)
     {
@@ -24,25 +25,26 @@ public class Idle : PlayerBaseState
     public override void UpdateLogic()
     {
         base.UpdateLogic();
-        horizontalInput = Input.GetAxisRaw("Horizontal");
-        verticalInput = Input.GetAxisRaw("Vertical");
+        horizontalInput = playsm.pControls.Player.Move.ReadValue<Vector2>().x;
+        verticalInput = playsm.pControls.Player.Move.ReadValue<Vector2>().y;
         Vector3 direction = new Vector3(horizontalInput, 0, verticalInput).normalized;
 
-        if (direction.magnitude >= 0.1f && playsm.weapon.aiming == false)
+        if (playsm.pControls.Player.Move.ReadValue<Vector2>().magnitude > 0.01f && playsm.weapon.aiming == false)
         {
             playerStateMachine.ChangeState(playsm.walkingState);
             playsm.anim.SetBool("Walking", true);
             AudioManager.manager.Play("walk");
             playsm.speed = 3;
         }
-        if (Input.GetKeyUp(KeyCode.LeftControl) && playsm.Crouched == false)
+
+        if (playsm.pControls.Player.Crouch.IsPressed() && playsm.Crouched == false)
         {
             playsm.Crouched = true;
             playerStateMachine.ChangeState(playsm.crouchingState);
             playsm.anim.SetBool("Crouching", true);
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && playsm.isGrounded)
+        if (playsm.pControls.Player.Jump.IsPressed() && playsm.isGrounded)
         {
             playerStateMachine.ChangeState(playsm.jumpingState);
             playsm.anim.SetBool("Jump", true);
@@ -50,7 +52,7 @@ public class Idle : PlayerBaseState
             playsm.Jumping = true;
         }
 
-        if (Input.GetMouseButton(0) && playsm.weapon.gunEquipped == true)
+        if (playsm.pControls.Player.Attack.IsPressed() && playsm.weapon.gunEquipped == true)
         {
             playerStateMachine.ChangeState(playsm.firingState);
             AudioManager.manager.Play("shootGun");
@@ -58,7 +60,7 @@ public class Idle : PlayerBaseState
             playsm.isShooting = true;
         }
 
-        if (Input.GetMouseButton(0) && playsm.weapon.gunEquipped == false)
+        if (playsm.pControls.Player.Attack.IsPressed() && playsm.weapon.gunEquipped == false)
         {
             playerStateMachine.ChangeState(playsm.punchingState);
             playsm.isPunching = true;
@@ -66,7 +68,7 @@ public class Idle : PlayerBaseState
             playsm.anim.SetBool("punching", true);
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha1) && playsm.weapon.pressCount == 0)
+        if (playsm.pControls.Player.EquipGun.IsPressed() && playsm.weapon.pressCount == 0)
         {
             playsm.weapon.ammoText.gameObject.SetActive(true);
             playsm.weapon.gun.SetActive(true);

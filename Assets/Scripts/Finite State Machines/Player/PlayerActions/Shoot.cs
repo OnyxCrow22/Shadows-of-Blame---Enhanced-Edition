@@ -21,7 +21,7 @@ public class Shoot : PlayerBaseState
     {
         base.UpdateLogic();
 
-        if (!Input.GetKey(KeyCode.Mouse0) && !playsm.weapon.aiming)
+        if (!playsm.pControls.Player.Attack.IsPressed() && !playsm.weapon.aiming)
         {
             AudioManager.manager.Stop("shootGun");
             playerStateMachine.ChangeState(playsm.idleState);
@@ -29,7 +29,7 @@ public class Shoot : PlayerBaseState
             playsm.isShooting = false;
         }
         
-        if (!Input.GetKey(KeyCode.Mouse0) && playsm.weapon.aiming)
+        if (!playsm.pControls.Player.Attack.IsPressed() && playsm.weapon.aiming)
         {
             AudioManager.manager.Stop("shootGun");
             playsm.anim.SetBool("shoot", false);

@@ -8,17 +8,19 @@ public class SpawnPolice : MonoBehaviour
     public GameObject policeOfficer;
     public GameObject[] policeVehicles;
     public PlayerMovementSM playsm;
-    PoliceMovementSM police;
+    PoliceMovementSM policesm;
     public GameObject[] pedestrianSpawns;
     GameObject newPolicePedestrian;
     NavMeshAgent PoliceAI;
     Vector3 lastKnownPos;
+    GameObject player;
+
 
     private void Start()
     {
         pedestrianSpawns = GameObject.FindGameObjectsWithTag("Spawn");
         StartCoroutine(PolicePedestrians());
-        police = newPolicePedestrian.GetComponent<PoliceMovementSM>();
+        policesm = newPolicePedestrian.GetComponent<PoliceMovementSM>();
     }
 
     public IEnumerator PolicePedestrians()
@@ -31,14 +33,14 @@ public class SpawnPolice : MonoBehaviour
             int RandomSpeed = Random.Range(1, 3);
             newPolicePedestrian = Instantiate(policeOfficer, pedestrianSpawns[SpawnIndex].transform.position, Quaternion.identity);
 
-            PoliceMovementSM policesm = newPolicePedestrian.GetComponent<PoliceMovementSM>();
+            policesm = newPolicePedestrian.GetComponent<PoliceMovementSM>();
             PoliceAI = newPolicePedestrian.GetComponent<NavMeshAgent>();
 
-            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            player = GameObject.FindGameObjectWithTag("Player");
 
             if (player != null)
             {
-                PlayerMovementSM playsm = player.GetComponent<PlayerMovementSM>();
+                playsm = player.GetComponent<PlayerMovementSM>();
                 player.GetComponent<GameObject>();
                 if (playsm != null && (policesm != null))
                 {

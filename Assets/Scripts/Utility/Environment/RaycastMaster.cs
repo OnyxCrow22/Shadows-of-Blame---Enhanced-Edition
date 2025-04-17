@@ -64,13 +64,13 @@ public class RaycastMaster : MonoBehaviour
                 door = true;
                 doorS = forwardHit.collider.gameObject.GetComponent<Door>();
                 interactKey.SetActive(true);
-                if (Input.GetKeyDown(KeyCode.E) && doorS.isOpen)
+                if (/* Input.GetKeyDown(KeyCode.E) && */ doorS.isOpen)
                 {
                     StartCoroutine(doorS.ClosingDoor());
                     StopCoroutine(doorS.OpeningDoor());
                     interactKey.SetActive(false);
                 }
-                else if (Input.GetKeyDown(KeyCode.E) && !doorS.isOpen)
+                else if (/* Input.GetKeyDown(KeyCode.E) && */ !doorS.isOpen)
                 {
                     StartCoroutine(doorS.OpeningDoor());
                     StopCoroutine(doorS.ClosingDoor());
@@ -88,14 +88,14 @@ public class RaycastMaster : MonoBehaviour
                     vehicular = forwardHit.collider.gameObject.GetComponent<VehicleEnterExit>();
                     interactKey.SetActive(true);
                     vehicular.canEnter = true;
-                    if (Input.GetKeyDown(KeyCode.E) && !vehicular.inVehicle)
+                    if (playsm.pControls.Player.Interact.IsPressed() && !vehicular.inVehicle)
                     {
                         vehicular.EnterVehicle();
                         vehicular.canEnter = false;
                         interactKey.SetActive(false);
                         inVehicle = true;
                     }
-                    else if (Input.GetKeyDown(KeyCode.E) && vehicular.inVehicle)
+                    else if (playsm.pControls.Player.Interact.IsPressed() && vehicular.inVehicle)
                     {
                         vehicular.ExitVehicle();
                         vehicular.canExit = true;
@@ -117,7 +117,7 @@ public class RaycastMaster : MonoBehaviour
                         placeEvidence = forwardHit.collider.gameObject.GetComponent<EvidencePlace>();
                         Debug.Log("Board hit!");
                         interactKey.SetActive(true);
-                        if (Input.GetKeyDown(KeyCode.E) && !placeEvidence.EvidencePlaced)
+                        if (playsm.pControls.Player.Interact.IsPressed() && !placeEvidence.EvidencePlaced)
                         {
                             placeEvidence.StartCoroutine(placeEvidence.EvidenceSwap());
                             placeEvidence.EvidencePlaced = true;
@@ -134,7 +134,7 @@ public class RaycastMaster : MonoBehaviour
                         finalEvidence = forwardHit.collider.gameObject.GetComponent<WWPlaceEvidence>();
                         Debug.Log("Final board hit!");
                         interactKey.SetActive(true);
-                        if (Input.GetKeyDown(KeyCode.E) && !finalEvidence.EvidencePlaced)
+                        if (playsm.pControls.Player.Interact.IsPressed() && !finalEvidence.EvidencePlaced)
                         {
                             finalEvidence.StartCoroutine(finalEvidence.EvidenceSwap());
                             finalEvidence.EvidencePlaced = true;
@@ -149,7 +149,7 @@ public class RaycastMaster : MonoBehaviour
                     newLift = forwardHit.collider.gameObject.GetComponent<Lift>();
                     Debug.Log("Going up or down?");
                     interactKey.SetActive(true);
-                    if (Input.GetKeyDown(KeyCode.E))
+                    if (playsm.pControls.Player.Interact.IsPressed())
                     {
                         if (newLift.atBottom)
                         {
@@ -175,7 +175,7 @@ public class RaycastMaster : MonoBehaviour
                 {
                     callLift = forwardHit.collider.gameObject.GetComponent<LiftCall>();
                     interactKey.SetActive(true);
-                    if (Input.GetKeyDown(KeyCode.E))
+                    if (playsm.pControls.Player.Interact.IsPressed())
                     {
                         if (callLift.liftToCall.atBottom)
                         {
@@ -210,12 +210,12 @@ public class RaycastMaster : MonoBehaviour
                     collectEvidence = downHit.collider.gameObject.GetComponent<CollectEvidence>();
                     Debug.Log("HIT THE EVIDENCE!");
                     interactKey.SetActive(true);
-                    if (Input.GetKeyDown(KeyCode.E) && !collectEvidence.reading)
+                    if (playsm.pControls.Player.Interact.IsPressed() && !collectEvidence.reading)
                     {
                         collectEvidence.PickUp();
                         collectEvidence.reading = true;
                     }
-                    else if (Input.GetKeyDown(KeyCode.E) && collectEvidence.reading)
+                    else if (playsm.pControls.Player.Interact.IsPressed() && collectEvidence.reading)
                     {
                         collectEvidence.CloseWindow();
                     }
@@ -227,12 +227,12 @@ public class RaycastMaster : MonoBehaviour
                     HParkEvidence = downHit.collider.gameObject.GetComponent<WWCollectHParkEvidence>();
                     Debug.Log("HIT THE EVIDENCE!");
                     interactKey.SetActive(true);
-                    if (Input.GetKeyDown(KeyCode.E) && !HParkEvidence.reading)
+                    if (playsm.pControls.Player.Interact.IsPressed() && !HParkEvidence.reading)
                     {
                         HParkEvidence.PickUp();
                         HParkEvidence.reading = true;
                     }
-                    else if (Input.GetKeyDown(KeyCode.E) && HParkEvidence.reading)
+                    else if (playsm.pControls.Player.Interact.IsPressed() && HParkEvidence.reading)
                     {
                         HParkEvidence.CloseWindow();
                     }
@@ -244,12 +244,12 @@ public class RaycastMaster : MonoBehaviour
                     prescottEvidence = downHit.collider.gameObject.GetComponent<WWCollectPrescottEvidence>();
                     Debug.Log("HIT THE EVIDENCE!");
                     interactKey.SetActive(true);
-                    if (Input.GetKeyDown(KeyCode.E) && !prescottEvidence.reading)
+                    if (playsm.pControls.Player.Interact.IsPressed() && !prescottEvidence.reading)
                     {
                         prescottEvidence.PickUp();
                         prescottEvidence.reading = true;
                     }
-                    else if (Input.GetKeyDown(KeyCode.E) && prescottEvidence.reading)
+                    else if (playsm.pControls.Player.Interact.IsPressed() && prescottEvidence.reading)
                     {
                         prescottEvidence.CloseWindow();
                     }
@@ -261,12 +261,12 @@ public class RaycastMaster : MonoBehaviour
                     gECollect = downHit.collider.gameObject.GetComponent<GangEvidenceCollect>();
                     Debug.Log("Evidence hit!");
                     interactKey.SetActive(true);
-                    if (Input.GetKeyDown(KeyCode.E) && !gECollect.isgReading)
+                    if (playsm.pControls.Player.Interact.IsPressed() && !gECollect.isgReading)
                     {
                         gECollect.GEPickup();
                         gECollect.isgReading = true;
                     }
-                    else if (Input.GetKeyDown(KeyCode.E) && gECollect.isgReading)
+                    else if (playsm.pControls.Player.Interact.IsPressed() && gECollect.isgReading)
                     {
                         gECollect.GECloseWindow();
                     }
@@ -278,12 +278,12 @@ public class RaycastMaster : MonoBehaviour
                     northbyCollect = downHit.collider.gameObject.GetComponent<WWNorthbyGangEvidence>();
                     Debug.Log("Evidence hit!");
                     interactKey.SetActive(true);
-                    if (Input.GetKeyDown(KeyCode.E) && !northbyCollect.isgReading)
+                    if (playsm.pControls.Player.Interact.IsPressed() && !northbyCollect.isgReading)
                     {
                         northbyCollect.GEPickup();
                         northbyCollect.isgReading = true;
                     }
-                    else if (Input.GetKeyDown(KeyCode.E) && northbyCollect.isgReading)
+                    else if (playsm.pControls.Player.Interact.IsPressed() && northbyCollect.isgReading)
                     {
                         northbyCollect.GECloseWindow();
                     }
@@ -295,12 +295,12 @@ public class RaycastMaster : MonoBehaviour
                     northBeachCollect = downHit.collider.gameObject.GetComponent<WWNorthBeachEvidence>();
                     Debug.Log("Evidence hit!");
                     interactKey.SetActive(true);
-                    if (Input.GetKeyDown(KeyCode.E) && !northBeachCollect.isgReading)
+                    if (playsm.pControls.Player.Interact.IsPressed() && !northBeachCollect.isgReading)
                     {
                         northBeachCollect.GEPickup();
                         northBeachCollect.isgReading = true;
                     }
-                    else if (Input.GetKeyDown(KeyCode.E) && northBeachCollect.isgReading)
+                    else if (playsm.pControls.Player.Interact.IsPressed() && northBeachCollect.isgReading)
                     {
                         northBeachCollect.GECloseWindow();
                     }
@@ -326,7 +326,7 @@ public class RaycastMaster : MonoBehaviour
                     roads = nameHit.collider.gameObject.GetComponent<RoadCheck>();
                     onRoad = true;
 
-                    if (Input.GetKeyDown(KeyCode.Z))
+                    if (playsm.pControls.Player.RevealInfo.IsPressed())
                     {
                         roads.StartCoroutine(roads.RoadDisplay(true));
                         Debug.Log("I hit " + roads.roadName);

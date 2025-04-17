@@ -60,7 +60,7 @@ public class VehicleEnterExit : MonoBehaviour
     {
         if (canEnter == true)
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            if (playsm.pControls.Player.Interact.IsPressed())
             {
                 StartCoroutine(EnteringVehicle());
             }
@@ -79,9 +79,11 @@ public class VehicleEnterExit : MonoBehaviour
         player.GetComponent<CapsuleCollider>().enabled = false;
         player.GetComponent<CharacterController>().enabled = false;
         player.GetComponent<ThrowGrenade>().enabled = false;
+        playsm.pControls.Player.Disable();
         vehicleCam.SetActive(true);
         playerCam.SetActive(false);
         TPCam.SetActive(false);
+        playsm.pControls.Driving.Enable();
         playsm.anim.SetBool("enteringCar", true);
         carDoorAnim.SetBool("doorOpen", true);
         AudioManager.manager.Play("CarDoor");
@@ -105,7 +107,7 @@ public class VehicleEnterExit : MonoBehaviour
         if (canExit == true)
         {
             rMaster.interactKey.SetActive(true);
-            if (Input.GetKeyDown(KeyCode.E) && inVehicle)
+            if (playsm.pControls.Player.Interact.IsPressed() && inVehicle)
             {
                 StartCoroutine(ExitingVehicle());
             }
@@ -123,11 +125,13 @@ public class VehicleEnterExit : MonoBehaviour
         vehicleCam.SetActive(false);
         playerCam.SetActive(true);
         TPCam.SetActive(true);
+        playsm.pControls.Driving.Disable();
         player.transform.parent = null;
         player.transform.position = exitPoint.transform.position;
         player.transform.rotation = exitPoint.transform.rotation;
         playsm.anim.SetBool("exitingCar", false);
         carDoorAnim.SetBool("doorOpen", false);
+        playsm.pControls.Player.Enable();
         player.GetComponent<PlayerMovementSM>().enabled = true;
         player.GetComponent<CapsuleCollider>().enabled = true;
         player.GetComponent<CharacterController>().enabled = true;

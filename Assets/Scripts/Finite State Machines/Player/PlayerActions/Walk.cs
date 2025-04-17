@@ -29,14 +29,6 @@ public class Walk : PlayerBaseState
         base.UpdateLogic();
 
         OnMove();
-        OnLook();
-    }
-
-    public void OnLook()
-    {
-        float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + playsm.cam.eulerAngles.y;
-        float angle = Mathf.SmoothDampAngle(playsm.transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, playsm.turnSmoothTime);
-        playsm.transform.rotation = Quaternion.Euler(0f, angle, 0f);
     }
 
     public void OnMove()
@@ -68,6 +60,14 @@ public class Walk : PlayerBaseState
             AudioManager.manager.Play("sprinting");
             AudioManager.manager.Stop("walk");
             playsm.speed = 8;
+        }
+
+        if (playsm.pControls.Player.Jump.IsPressed() && playsm.isGrounded)
+        {
+            playerStateMachine.ChangeState(playsm.jumpingState);
+            playsm.anim.SetBool("Jump", true);
+            playsm.isGrounded = false;
+            playsm.Jumping = true;
         }
     }
 }

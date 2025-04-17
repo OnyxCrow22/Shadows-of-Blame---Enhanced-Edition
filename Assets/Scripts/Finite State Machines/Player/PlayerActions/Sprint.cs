@@ -48,6 +48,14 @@ public class Sprint : PlayerBaseState
 
         playsm.har.Move(velocity * Time.deltaTime);
 
+        if (playsm.pControls.Player.Jump.IsPressed() && playsm.isGrounded)
+        {
+            playerStateMachine.ChangeState(playsm.jumpingState);
+            playsm.anim.SetBool("Jump", true);
+            playsm.isGrounded = false;
+            playsm.Jumping = true;
+        }
+
         if (playsm.pControls.Player.Sprint.ReadValue<float>() <= 0)
         {
             playerStateMachine.ChangeState(playsm.walkingState);

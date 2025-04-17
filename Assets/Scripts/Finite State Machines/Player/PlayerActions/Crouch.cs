@@ -28,7 +28,7 @@ public class Crouch : PlayerBaseState
         verticalInput = Input.GetAxisRaw("Vertical");
         Vector3 direction = new Vector3(horizontalInput, 0, verticalInput).normalized;
 
-        if (Input.GetKeyUp(KeyCode.LeftControl) && playsm.Crouched == true)
+        if (!playsm.pControls.Player.Crouch.IsPressed() && playsm.Crouched == true)
         {
             playsm.Crouched = false;
             playerStateMachine.ChangeState(playsm.idleState);

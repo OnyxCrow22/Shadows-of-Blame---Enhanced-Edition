@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class PauseMenu : MonoBehaviour
 {
     [Header("UI References")]
+    public PlayerControls pControls;
     public GameObject MainUI;
     public GameObject pauseMenu;
     public GameObject settingsMenu;
@@ -14,9 +15,24 @@ public class PauseMenu : MonoBehaviour
     public GameObject graphicsPanel;
     public bool paused = false;
 
+    void Awake()
+    {
+        pControls = new PlayerControls();   
+    }
+
+    void OnEnable()
+    {
+        pControls.Enable();
+    }
+
+    void OnDisable()
+    {
+        pControls.Disable();
+    }
+
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (pControls.Player.Pause.IsPressed())
         {
             if (!paused)
             {
@@ -33,6 +49,8 @@ public class PauseMenu : MonoBehaviour
     {
         MainUI.SetActive(false);
         pauseMenu.SetActive(true);
+        pControls.Player.Disable();
+        pControls.UI.Enable();
         paused = true;
         Time.timeScale = 0;
         AudioListener.pause = true;
@@ -42,6 +60,8 @@ public class PauseMenu : MonoBehaviour
     {
         pauseMenu.SetActive(false);
         MainUI.SetActive(true);
+        pControls.Player.Enable();
+        pControls.UI.Disable();
         paused = false;
         Time.timeScale = 1;
         AudioListener.pause = false;

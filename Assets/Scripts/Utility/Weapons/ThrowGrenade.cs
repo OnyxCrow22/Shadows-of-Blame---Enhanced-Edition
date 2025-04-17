@@ -11,6 +11,8 @@ public class ThrowGrenade : MonoBehaviour
     public enum ThrowState { notReady, ready};
     private ThrowState currentThrow;
     public float delay = 20;
+    Rigidbody rb;
+    GameObject newGrenade;
 
     private void Update()
     {
@@ -36,19 +38,17 @@ public class ThrowGrenade : MonoBehaviour
                     break;
                 }
         }
-        /*
-        if (Input.GetKeyDown(KeyCode.G) && !playsm.weapon.gunEquipped)
+        if (playsm.pControls.Player.Throw.IsPressed() && !playsm.weapon.gunEquipped)
         {
             Throw();
             playsm.throwingGrenade = true;
             playsm.hasThrownGrenade = true;
         }
 
-        if (!Input.GetKeyDown(KeyCode.G))
+        if (!playsm.pControls.Player.Throw.IsPressed())
         {
             playsm.throwingGrenade = false;
         }
-        */
 
         delay -= Time.deltaTime;
 
@@ -61,8 +61,8 @@ public class ThrowGrenade : MonoBehaviour
 
     void Throw()
     {
-        GameObject newGrenade = Instantiate(grenade, transform.position, transform.rotation);
-        Rigidbody rb = newGrenade.GetComponent<Rigidbody>();
+        newGrenade = Instantiate(grenade, transform.position, transform.rotation);
+        rb = newGrenade.GetComponent<Rigidbody>();
         rb.AddForce(transform.forward * throwForce, ForceMode.VelocityChange);
         Destroy(newGrenade, 2);
     }
