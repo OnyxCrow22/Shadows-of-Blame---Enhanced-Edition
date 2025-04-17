@@ -10,6 +10,12 @@ public class TrafficLightCheck : MonoBehaviour
     GameObject currentNPC;
     NPCMovementSM NPC;
     AICarController stopCheck;
+
+    private void Awake()
+    {
+        currentCar.GetComponent<AICarController>();   
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Vehicle"))

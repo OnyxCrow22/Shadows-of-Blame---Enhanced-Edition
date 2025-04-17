@@ -1,8 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.Eventing.Reader;
-using System.Runtime.CompilerServices;
-using System.Runtime.Serialization.Json;
 using UnityEngine;
 
 public class TrafficLight : MonoBehaviour

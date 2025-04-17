@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 public class PoliceLevel : MonoBehaviour
 {
+    // TO DO: Rework this completely.
     public GameObject[] levels;
 
     public enum policeState {normal, searching, pursuit}
@@ -61,8 +62,9 @@ public class PoliceLevel : MonoBehaviour
 
     public void LostPlayer()
     {
-        if (!spottedPlayer && policeLevels >= 1 && !cancelPursuit)
+        if (!spottedPlayer && policeLevels >= 1)
         {
+            currentState = policeState.searching;
             StartCoroutine(PlayerSearch());
             Debug.Log("Begin search...");
         }
@@ -97,30 +99,62 @@ public class PoliceLevel : MonoBehaviour
 
     public void UpdateLevel()
     {
-        if (killedNPCS == 1)
+        switch (killedNPCS)
         {
-            policeLevels = 1;
-            activateLevel = true;
+            case 1:
+            {
+                policeLevels = 1;
+                activateLevel = true;
+                break;
+            }
+            case 3:
+            {
+                policeLevels = 2;
+                break;
+            }
+            case 9:
+            {
+                policeLevels = 3;
+                break;
+            }
+            case 12:
+            {
+                policeLevels = 4;
+                break;
+            }
+            case 15:
+            {
+                policeLevels = 5;
+                break;
+            }
         }
-        if (killedNPCS == 3 || killedOfficers == 1)
+
+        switch (killedOfficers)
         {
-            policeLevels = 2;
-            activateLevel = true;
-        }
-        if (killedNPCS == 9 || killedOfficers == 3)
-        {
-            policeLevels = 3;
-            activateLevel = true;
-        }
-        if (killedNPCS == 12 || killedOfficers == 5)
-        {
-            policeLevels = 4;
-            activateLevel = true;
-        }
-        if (killedNPCS == 15 || killedOfficers == 7)
-        {
-            policeLevels = 5;
-            activateLevel = true;
+            case 1:
+            {
+                policeLevels = 2;
+                if (!activateLevel)
+                {
+                    activateLevel = true;
+                }
+                break;
+            }
+            case 3:
+            {
+                policeLevels = 3;
+                break;
+            }
+            case 5:
+            {
+                policeLevels = 4;
+                break;
+            }
+            case > 7:
+            {
+                policeLevels = 5;
+                break;
+            }
         }
 
         if (OTR.wLocked.attemptingWesteria)

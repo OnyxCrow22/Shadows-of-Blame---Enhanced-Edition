@@ -15,6 +15,8 @@ public class Grenade : MonoBehaviour
     public GameObject grenade;
     public bool hasExploded = false;
     public AudioSource explosion;
+    EnemyHealth damage;
+    NPCHealth NPCs;
 
     [SerializeField] float countdown;
 
@@ -49,11 +51,14 @@ public class Grenade : MonoBehaviour
                 rb.AddExplosionForce(force, transform.position, radius);
             }
 
-            EnemyHealth damage = nearbyObject.GetComponent<EnemyHealth>();
-            damage.LoseHealth(damage.healthLoss + grenadeDamage);
+            damage = nearbyObject.GetComponent<EnemyHealth>();
+            if (damage != null)
+            {
+                damage.LoseHealth(damage.healthLoss + grenadeDamage);
+            }
 
-            NPCHealth NPCS = nearbyObject.GetComponent<NPCHealth>();
-            NPCS.LoseHealth(NPCS.healthLoss + grenadeDamage);
+            NPCs = nearbyObject.GetComponent<NPCHealth>();
+            NPCs.LoseHealth(NPCs.healthLoss + grenadeDamage);
         }
         Destroy(grenade, 2);
     }

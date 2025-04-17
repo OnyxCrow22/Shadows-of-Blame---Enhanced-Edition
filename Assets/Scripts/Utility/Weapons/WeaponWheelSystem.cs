@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class WeaponWheelSystem : MonoBehaviour
 {
@@ -11,10 +12,33 @@ public class WeaponWheelSystem : MonoBehaviour
     private currentWeap weaponState;
     public bool open, closed;
 
-    private void Update()
+    private PlayerControls pControls;
+
+    void Awake()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
+        pControls = new PlayerControls();
+
+        pControls.Player.SwitchWeapon.performed += ctx => OnSwitchWeapon();
+    }
+
+    private void OnEnable()
+    {
+        pControls.Enable();        
+    }
+
+    private void OnDisable()
+    {
+        pControls.Disable();
+    }
+
+    void OnSwitchWeapon()
+    {
+        Debug.Log("OPENED MENU!");
+        OnSwitch();
+    }
+
+    public void OnSwitch()
+    {
             switch (weaponState)
             {
                 case currentWeap.closed:
@@ -38,6 +62,5 @@ public class WeaponWheelSystem : MonoBehaviour
                     }
                     break;
             }
-        }
     }
 }

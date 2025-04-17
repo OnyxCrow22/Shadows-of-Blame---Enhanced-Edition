@@ -33,7 +33,7 @@ public class WeatherCycle : MonoBehaviour
 
         if (timer >= weatherChange)
         {
-            WeatherSwitch();
+            NextWeather();
             timer = 0;
         }
     }
@@ -46,6 +46,7 @@ public class WeatherCycle : MonoBehaviour
                 {
                     sunny.SetActive(true);
                     isSunny = true;
+                    currentState = weatherState.sunny;
                     break;
                 }
             case weatherState.partlyCloudy:
@@ -102,7 +103,7 @@ public class WeatherCycle : MonoBehaviour
 
     public void NextWeather()
     {
-        randomSwitch = Random.Range(90, 900);
+        randomSwitch = Random.Range(10, 15);
         WeatherSwitch();
     }
 

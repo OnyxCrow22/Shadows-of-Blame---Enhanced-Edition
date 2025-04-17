@@ -30,6 +30,8 @@ public class PlayerMovementSM : PlayerStateMachine
     public PlayerHealth health;
     public PunchSystem punching;
 
+    public PlayerControls pControls;
+
     // States
     [HideInInspector]
     public Idle idleState;
@@ -58,6 +60,18 @@ public class PlayerMovementSM : PlayerStateMachine
         crouchWalking = new CrouchWalking(this);
         jumpingState = new Jump(this);
         punchingState = new Punch(this);
+
+        pControls = new PlayerControls();
+    }
+
+    void OnEnable()
+    {
+        pControls.Enable();
+    }
+
+    void OnDisable()
+    {
+        pControls.Disable();
     }
 
     protected override PlayerBaseState GetInitialState()

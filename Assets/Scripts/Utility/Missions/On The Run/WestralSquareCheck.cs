@@ -9,7 +9,7 @@ public class WestralSquareCheck : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && !OTR.Evidence)
         {
             WSquare = true;
             OTR.inWestralSquare = true;

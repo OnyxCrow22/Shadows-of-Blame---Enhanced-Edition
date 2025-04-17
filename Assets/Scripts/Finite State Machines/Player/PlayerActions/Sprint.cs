@@ -28,6 +28,11 @@ public class Sprint : PlayerBaseState
     {
         base.UpdateLogic();
 
+        OnSprint();
+    }
+
+    public void OnSprint()
+    {
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
         direction = new Vector3(horizontalInput, 0, verticalInput).normalized;
@@ -43,7 +48,7 @@ public class Sprint : PlayerBaseState
 
         playsm.har.Move(velocity * Time.deltaTime);
 
-        if (!Input.GetKey(KeyCode.LeftShift))
+        if (playsm.pControls.Player.Sprint.ReadValue<float>() <= 0)
         {
             playerStateMachine.ChangeState(playsm.walkingState);
             playsm.anim.SetBool("Sprinting", false);

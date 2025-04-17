@@ -7,7 +7,6 @@ public class CarController : MonoBehaviour
     [Header("Car Settings")]
     float horizontalInput;
     float verticalInput;
-    float reverse;
     float steeringAngle;
     public float maxSteeringAngle;
     public float motorForce;

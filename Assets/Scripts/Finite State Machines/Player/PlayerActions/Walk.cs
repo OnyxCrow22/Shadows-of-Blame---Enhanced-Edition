@@ -28,8 +28,21 @@ public class Walk : PlayerBaseState
     {
         base.UpdateLogic();
 
-        horizontalInput = Input.GetAxisRaw("Horizontal");
-        verticalInput = Input.GetAxisRaw("Vertical");
+        OnMove();
+        OnLook();
+    }
+
+    public void OnLook()
+    {
+        float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + playsm.cam.eulerAngles.y;
+        float angle = Mathf.SmoothDampAngle(playsm.transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, playsm.turnSmoothTime);
+        playsm.transform.rotation = Quaternion.Euler(0f, angle, 0f);
+    }
+
+    public void OnMove()
+    {
+        horizontalInput = playsm.pControls.Player.Move.ReadValue<Vector2>().x;
+        verticalInput = playsm.pControls.Player.Move.ReadValue<Vector2>().y;
         direction = new Vector3(horizontalInput, 0, verticalInput).normalized;
 
         float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + playsm.cam.eulerAngles.y;
@@ -48,7 +61,7 @@ public class Walk : PlayerBaseState
             playsm.anim.SetBool("Walking", false);
             AudioManager.manager.Stop("walk");
         }
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (playsm.pControls.Player.Sprint.ReadValue<float>() > 0)
         {
             playerStateMachine.ChangeState(playsm.runningState);
             playsm.anim.SetBool("Sprinting", true);
