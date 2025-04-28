@@ -20,6 +20,8 @@ public class SpawnNPC : MonoBehaviour
 
     public GameObject gameManager;
 
+    PlayerMovementSM playsm;
+
     private void Start()
     {
         spawnPoint = GameObject.FindGameObjectsWithTag("Spawn");
@@ -40,11 +42,11 @@ public class SpawnNPC : MonoBehaviour
             AI = newNPC.GetComponent<NavMeshAgent>();
             newNPC.GetComponent<NPCMovementSM>().spawnedIn = true;
 
-            if (newNPC.tag == "MaleNPC")
+            if (newNPC.CompareTag("MaleNPC"))
             {
                 NPCSM.isMale = true;
             }
-            else if (newNPC.tag == "FemaleNPC")
+            else if (newNPC.CompareTag("FemaleNPC"))
             {
                 NPCSM.isFemale = true;
                 NPCSM.aggression = 0;
@@ -57,7 +59,7 @@ public class SpawnNPC : MonoBehaviour
 
             if (player != null)
             {
-                PlayerMovementSM playsm = player.GetComponent<PlayerMovementSM>();
+                playsm = player.GetComponent<PlayerMovementSM>();
                 player.GetComponent<GameObject>();
                 if (playsm != null && NPCSM != null)
                 {
