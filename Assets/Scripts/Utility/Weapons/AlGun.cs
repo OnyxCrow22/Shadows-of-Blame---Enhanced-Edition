@@ -51,9 +51,7 @@ public class AlGun : MonoBehaviour
 
         if (Physics.Raycast(shooteRay, out eHit, range, Player) || (Physics.Raycast(shooteRay, out eHit, range)))
         {
-            Debug.Log(eHit.collider.name);
-
-            if (eHit.collider.tag == "Player")
+            if (eHit.collider.CompareTag("Player"))
             {
                 esm.health.LoseHealth(esm.health.healthLoss);
                 Debug.Log($"You was hit by {esm.enemy}");

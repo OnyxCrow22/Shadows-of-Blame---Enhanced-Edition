@@ -128,8 +128,6 @@ public class Gun : MonoBehaviour
         Debug.DrawRay(aimCam.transform.position, direction, Color.yellow);
         if (Physics.Raycast(shootRay, out hit, range, Enemy) || (Physics.Raycast(shootRay, out hit, range)))
         {
-            Debug.Log(hit.collider.name);
-
             if (hit.collider.CompareTag("SaintMarysGangMember") || hit.collider.CompareTag("SaintMarysGangLeader") || hit.collider.CompareTag("NorthbyGangMember") || hit.collider.CompareTag("NorthbyGangLeader") || hit.collider.CompareTag("NorthBeachGangMember"))
                 hit.collider.GetComponent<EnemyHealth>().LoseHealth(damage);
 

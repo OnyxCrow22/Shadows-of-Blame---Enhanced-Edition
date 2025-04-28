@@ -54,12 +54,11 @@ public class PoliceGun : MonoBehaviour
         Ray shooteRay = new Ray(FOV.transform.position, direction);
         Debug.DrawRay(FOV.transform.position, direction, Color.red);
 
-        if (Physics.Raycast(shooteRay, out eHit, range, Player) || (Physics.Raycast(shooteRay, out eHit, range)))
+        if (Physics.Raycast(shooteRay, out eHit, range, Player) || Physics.Raycast(shooteRay, out eHit, range))
         {
-            Debug.Log(eHit.collider.name);
             Debug.DrawRay(FOV.transform.position, direction, Color.yellow);
 
-            if (eHit.collider.tag == "Player")
+            if (eHit.collider.CompareTag("Player"))
             {
                 police.playsm.health.LoseHealth(police.playsm.health.healthLoss);
                 Debug.Log($"You was hit by {policeOfficer}");

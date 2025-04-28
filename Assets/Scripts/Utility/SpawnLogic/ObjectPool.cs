@@ -4,25 +4,37 @@ using UnityEngine;
 
 public class ObjectPool : MonoBehaviour
 {
-    public static ObjectPool SharedInstance;
-    public List<GameObject> pooledObjects;
-    public GameObject objectToPool;
+    public static ObjectPool oPInstance;
+
+    private List<GameObject> pooledObjs = new List<GameObject>();
     public int amountToPool;
 
-    private void Awake()
+    [SerializeField] private GameObject targetObj;
+
+    void Awake()
     {
-        SharedInstance = this;
+        oPInstance = this;   
     }
 
-    private void Start()
+    void Start()
     {
-        pooledObjects = new List<GameObject>();
-        GameObject tmp;
-        for(int i = 0; i < amountToPool; i++)
+        for (int i = 0; i < amountToPool; i++)
         {
-            tmp = Instantiate(objectToPool);
-            tmp.SetActive(false);
-            pooledObjects.Add(tmp);
+            GameObject newObj = Instantiate(targetObj);
+            newObj.SetActive(false);
+            pooledObjs.Add(newObj);
         }
+    }
+
+    public GameObject GetPooledObject()
+    {
+        for (int i = 0; i < pooledObjs.Count; i++)
+        {
+            if (!pooledObjs[i].activeInHierarchy)
+            {
+                return pooledObjs[i];
+            }
+        }
+        return null;
     }
 }

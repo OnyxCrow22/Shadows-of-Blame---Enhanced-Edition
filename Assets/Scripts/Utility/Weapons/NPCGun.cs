@@ -54,11 +54,9 @@ public class NPCGun : MonoBehaviour
         Ray shooteRay = new Ray(FOV.transform.position, direction);
         Debug.DrawRay(FOV.transform.position, direction, Color.red);
 
-        if (Physics.Raycast(shooteRay, out eHit, range, Player) || (Physics.Raycast(shooteRay, out eHit, range)))
+        if (Physics.Raycast(shooteRay, out eHit, range, Player) || Physics.Raycast(shooteRay, out eHit, range))
         {
-            Debug.Log(eHit.collider.name);
-
-            if (eHit.collider.tag == "Player")
+            if (eHit.collider.CompareTag("Player"))
             {
                 NPC.playsm.health.LoseHealth(NPC.playsm.health.healthLoss);
                 Debug.Log($"You was hit by {currentNPC}");

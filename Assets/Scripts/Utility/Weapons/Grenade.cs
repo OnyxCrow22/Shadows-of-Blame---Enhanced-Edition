@@ -1,8 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Security.Cryptography;
-using Unity.VisualScripting;
-using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
 public class Grenade : MonoBehaviour
@@ -17,6 +12,8 @@ public class Grenade : MonoBehaviour
     public AudioSource explosion;
     EnemyHealth damage;
     NPCHealth NPCs;
+
+    Collider[] cols;
 
     [SerializeField] float countdown;
 
@@ -37,9 +34,18 @@ public class Grenade : MonoBehaviour
 
     public void Explode()
     {
-        Instantiate(explosionVFX, grenade.transform.position, grenade.transform.rotation);
+        // Instantiate(explosionVFX, grenade.transform.position, grenade.transform.rotation);
 
-        Collider[] cols = Physics.OverlapSphere(transform.position, radius);
+        GameObject newGrenade = ObjectPool.oPInstance.GetPooledObject();
+
+        if (newGrenade != null)
+        {
+            newGrenade.transform.position = grenade.transform.position;
+            newGrenade.SetActive(true);
+        }
+        
+        cols = new Collider[10];
+        int hitCount = Physics.OverlapSphereNonAlloc(transform.position, radius, cols);
 
         explosion.Play();
 
@@ -60,7 +66,7 @@ public class Grenade : MonoBehaviour
             NPCs = nearbyObject.GetComponent<NPCHealth>();
             NPCs.LoseHealth(NPCs.healthLoss + grenadeDamage);
         }
-        Destroy(grenade, 2);
+        gameObject.SetActive(false);
     }
 }
 

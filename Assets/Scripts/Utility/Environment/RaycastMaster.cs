@@ -58,33 +58,37 @@ public class RaycastMaster : MonoBehaviour
 
         if (Physics.Raycast(forwardRay, out forwardHit, forwardLength))
         {
-            switch (forwardHit.collider.gameObject.tag)
+            switch (forwardHit.collider.gameObject.CompareTag("Door"))
             {
-                case "Door":
-                door = true;
-                doorS = forwardHit.collider.gameObject.GetComponent<Door>();
-                interactKey.SetActive(true);
-                if (/* Input.GetKeyDown(KeyCode.E) && */ doorS.isOpen)
-                {
-                    StartCoroutine(doorS.ClosingDoor());
-                    StopCoroutine(doorS.OpeningDoor());
-                    interactKey.SetActive(false);
-                }
-                else if (/* Input.GetKeyDown(KeyCode.E) && */ !doorS.isOpen)
-                {
-                    StartCoroutine(doorS.OpeningDoor());
-                    StopCoroutine(doorS.ClosingDoor());
-                    interactKey.SetActive(false);
-                }
-                // We did not hit a door, set the interact key to false.
-                else
-                {
-                    interactKey.SetActive(false);
-                }
-                break;
+                case true:
+                    door = true;
+                    doorS = forwardHit.collider.gameObject.GetComponent<Door>();
+                    interactKey.SetActive(true);
+                    if (/* Input.GetKeyDown(KeyCode.E) && */ doorS.isOpen)
+                    {
+                        StartCoroutine(doorS.ClosingDoor());
+                        StopCoroutine(doorS.OpeningDoor());
+                        interactKey.SetActive(false);
+                    }
+                    else if (/* Input.GetKeyDown(KeyCode.E) && */ !doorS.isOpen)
+                    {
+                        StartCoroutine(doorS.OpeningDoor());
+                        StopCoroutine(doorS.ClosingDoor());
+                        interactKey.SetActive(false);
+                    }
+                    // We did not hit a door, set the interact key to false.
+                    else
+                    {
+                        interactKey.SetActive(false);
+                    }
+                    break;
+                case false:
+                    break;
+            }
 
-                case "VehicleDoor":
-                {
+            switch (forwardHit.collider.gameObject.CompareTag("VehicleDoor"))
+            {
+                case true:
                     vehicular = forwardHit.collider.gameObject.GetComponent<VehicleEnterExit>();
                     interactKey.SetActive(true);
                     vehicular.canEnter = true;
@@ -108,10 +112,13 @@ public class RaycastMaster : MonoBehaviour
                         vehicular.canEnter = false;
                     }
                     break;
-                }
+                case false:
+                    break;
+            }
 
-                case "EvidenceBoard":
-                {
+            switch (forwardHit.collider.gameObject.CompareTag("EvidenceBoard"))
+            {
+                case true:
                     if (OTR.GangEvidence && OTR.enabled)
                     {
                         placeEvidence = forwardHit.collider.gameObject.GetComponent<EvidencePlace>();
@@ -125,10 +132,13 @@ public class RaycastMaster : MonoBehaviour
                         }
                     }
                     break;
-                }
+                case false:
+                    break;
+            }
 
-                case "WesteriaEvidenceBoard":
-                {
+            switch (forwardHit.collider.gameObject.CompareTag("WesteriaEvidenceBoard"))
+            {
+                case true:
                     if (WW.collectedNorthBeachEvidence && WW.enabled)
                     {
                         finalEvidence = forwardHit.collider.gameObject.GetComponent<WWPlaceEvidence>();
@@ -142,10 +152,13 @@ public class RaycastMaster : MonoBehaviour
                         }
                     }
                     break;
-                }
+                case false:
+                    break;
+            }
 
-                case "LiftObj":
-                {
+            switch (forwardHit.collider.gameObject.CompareTag("LiftObj"))
+            {
+                case true:
                     newLift = forwardHit.collider.gameObject.GetComponent<Lift>();
                     Debug.Log("Going up or down?");
                     interactKey.SetActive(true);
@@ -169,10 +182,13 @@ public class RaycastMaster : MonoBehaviour
                         }
                     }
                     break;
-                }
-                
-                case "Button":
-                {
+                case false:
+                    break;
+            }
+
+            switch (forwardHit.collider.gameObject.CompareTag("Button"))
+            {
+                case true:
                     callLift = forwardHit.collider.gameObject.GetComponent<LiftCall>();
                     interactKey.SetActive(true);
                     if (playsm.pControls.Player.Interact.IsPressed())
@@ -191,8 +207,15 @@ public class RaycastMaster : MonoBehaviour
                         }
                     }
                     break;
-                }
+                case false:
+                    break;
             }
+        }
+        else
+        {
+            door = false;
+            if (vehicular != null) vehicular.canEnter = false;
+            interactKey.SetActive(false);
         }
     }
 
@@ -203,10 +226,9 @@ public class RaycastMaster : MonoBehaviour
         float downLength = 4;
         if (Physics.Raycast(downRay, out RaycastHit downHit, downLength))
         {
-            switch (downHit.collider.gameObject.tag)
+            switch (downHit.collider.gameObject.CompareTag("Evidence"))
             {
-                case "Evidence":
-                {
+                case true:
                     collectEvidence = downHit.collider.gameObject.GetComponent<CollectEvidence>();
                     Debug.Log("HIT THE EVIDENCE!");
                     interactKey.SetActive(true);
@@ -220,10 +242,13 @@ public class RaycastMaster : MonoBehaviour
                         collectEvidence.CloseWindow();
                     }
                     break;
-                }
+                case false:
+                    break;
+            }
 
-                case "HParkEvidence":
-                {
+            switch (downHit.collider.gameObject.CompareTag("HParkEvidence"))
+            {
+                case true:
                     HParkEvidence = downHit.collider.gameObject.GetComponent<WWCollectHParkEvidence>();
                     Debug.Log("HIT THE EVIDENCE!");
                     interactKey.SetActive(true);
@@ -237,10 +262,13 @@ public class RaycastMaster : MonoBehaviour
                         HParkEvidence.CloseWindow();
                     }
                     break;
-                }
+                case false:
+                    break;
+            }
 
-                case "PrescottEvidence":
-                {
+            switch (downHit.collider.gameObject.CompareTag("PrescottEvidence"))
+            {
+                case true:
                     prescottEvidence = downHit.collider.gameObject.GetComponent<WWCollectPrescottEvidence>();
                     Debug.Log("HIT THE EVIDENCE!");
                     interactKey.SetActive(true);
@@ -254,10 +282,13 @@ public class RaycastMaster : MonoBehaviour
                         prescottEvidence.CloseWindow();
                     }
                     break;
-                }
+                case false:
+                    break;
+            }
 
-                case "GEvidence":
-                {
+            switch (downHit.collider.gameObject.CompareTag("GEvidence"))
+            {
+                case true:
                     gECollect = downHit.collider.gameObject.GetComponent<GangEvidenceCollect>();
                     Debug.Log("Evidence hit!");
                     interactKey.SetActive(true);
@@ -271,10 +302,13 @@ public class RaycastMaster : MonoBehaviour
                         gECollect.GECloseWindow();
                     }
                     break;
-                }
+                case false:
+                    break;
+            }
 
-                case "NorthbyEvidence":
-                {
+            switch (downHit.collider.gameObject.CompareTag("NorthbyEvidence"))
+            {
+                case true:
                     northbyCollect = downHit.collider.gameObject.GetComponent<WWNorthbyGangEvidence>();
                     Debug.Log("Evidence hit!");
                     interactKey.SetActive(true);
@@ -288,10 +322,13 @@ public class RaycastMaster : MonoBehaviour
                         northbyCollect.GECloseWindow();
                     }
                     break;
-                }
+                case false:
+                    break;
+            }
 
-                case "NorthBeachEvidence":
-                {
+            switch (downHit.collider.gameObject.CompareTag("NorthBeachEvidence"))
+            {
+                case true:
                     northBeachCollect = downHit.collider.gameObject.GetComponent<WWNorthBeachEvidence>();
                     Debug.Log("Evidence hit!");
                     interactKey.SetActive(true);
@@ -305,8 +342,14 @@ public class RaycastMaster : MonoBehaviour
                         northBeachCollect.GECloseWindow();
                     }
                     break;
-                }
+                case false:
+                    break;
             }
+        }
+        else
+        {
+            interactKey.SetActive(false);
+            evidence = false;
         }
     }
 
@@ -317,11 +360,10 @@ public class RaycastMaster : MonoBehaviour
         float nameLength = 24;
         if (Physics.Raycast(nameRay, out RaycastHit nameHit, nameLength))
         {
-            // Switch statement for checking each name indivdiually.
-            switch (nameHit.collider.gameObject.tag)
+            // Switch statement for checking each name individually.
+            switch (nameHit.collider.gameObject.CompareTag("Road"))
             {
-                case "Road":
-                {
+                case true:
                     // Update the road accordingly.
                     roads = nameHit.collider.gameObject.GetComponent<RoadCheck>();
                     onRoad = true;
@@ -336,24 +378,44 @@ public class RaycastMaster : MonoBehaviour
                         roads.StartCoroutine(roads.RoadDisplay(false));
                     }
                     break;
-                }
-                case "District":
-                {
+                case false:
+                    onRoad = false;
+                    if (roads != null) roads.StartCoroutine(roads.RoadDisplay(false));
+                    break;
+            }
+            switch (nameHit.collider.gameObject.CompareTag("District"))
+            {
+                case true:
                     districts = nameHit.collider.gameObject.GetComponent<DistrictCheck>();
                     districts.currentDistrict.text = districts.districtName;
                     inDistrict = true;
                     Debug.Log("Welcome to " + districts.districtName);
                     break;
-                }
+                case false:
+                    inDistrict = false;
+                    if (districts != null) districts.currentDistrict.text = "";
+                    break;
+            }
 
-                case "Vehicle":
-                {
+            switch (nameHit.collider.gameObject.CompareTag("Vehicle"))
+            {
+                case true:
                     vehicles = nameHit.collider.gameObject.GetComponent<VehicleCheck>();
                     vehicles.currentVehicle.text = vehicles.vehicleName;
                     Debug.Log("You are currently driving" + vehicles.currentVehicle);
                     break;
-                }
+                case false:
+                    if (vehicles != null) vehicles.currentVehicle.text = "";
+                    break;
             }
+        }
+        else
+        {
+            onRoad = false;
+            inDistrict = false;
+            if (roads != null) roads.StartCoroutine(roads.RoadDisplay(false));
+            if (districts != null) districts.currentDistrict.text = "";
+            if (vehicles != null) vehicles.currentVehicle.text = "";
         }
     }
 }

@@ -4,8 +4,8 @@
         "m_EditorHideFlags": 0,
         "m_Name": "FBX Export Settings",
         "m_EditorClassIdentifier": "",
-        "Verbose": false,
-        "DisableAbsolutePathWarning": false,
+        "Verbose": true,
+        "DisableAbsolutePathWarning": true,
         "launchAfterInstallation": false,
         "HideSendToUnityMenu": false,
         "BakeAnimation": false,
@@ -26,13 +26,13 @@
             "exportFormat": 1,
             "animatedSkinnedMesh": false,
             "mayaCompatibleNaming": true,
-            "include": 2,
+            "include": 0,
             "lodLevel": 0,
             "objectPosition": 0,
             "exportUnrendered": false,
             "preserveImportSettings": true,
-            "keepInstances": true,
-            "embedTextures": false
+            "keepInstances": false,
+            "embedTextures": true
         },
         "convertToPrefabSettingsSerialize": {
             "exportFormat": 1,

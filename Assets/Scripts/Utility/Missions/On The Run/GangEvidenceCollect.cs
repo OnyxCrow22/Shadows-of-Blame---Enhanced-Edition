@@ -39,8 +39,6 @@ public class GangEvidenceCollect : MonoBehaviour
         PoliceLevel.policeLevels = 1;
         PoliceLevel.activateLevel = true;
         OTR.objective.text = "Lose the police.";
-
-        Debug.Log($"Cancel the pursuit, Felton is gone: {OTR.police.cancelPursuit}");
     }
 
     public void CancelPursuit()

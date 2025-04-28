@@ -31,10 +31,8 @@ public class PunchSystem : MonoBehaviour
         float punchRange = 8;
         Ray punchRay = new Ray(FOV.transform.position, FOV.transform.forward);
         Debug.DrawRay(FOV.transform.position, FOV.transform.forward, Color.cyan);
-        if (Physics.Raycast(punchRay, out punchHit, punchRange, Enemy) || (Physics.Raycast(punchRay, out punchHit, punchRange, NPC)))
+        if (Physics.Raycast(punchRay, out punchHit, punchRange, Enemy) || Physics.Raycast(punchRay, out punchHit, punchRange, NPC))
         {
-            Debug.Log(punchHit.collider.name);
-
             if (punchHit.collider.CompareTag("SaintMarysGangMember") || punchHit.collider.CompareTag("SaintMarysGangLeader") || punchHit.collider.CompareTag("NorthbyGangMember") || punchHit.collider.CompareTag("NorthbyGangLeader") || punchHit.collider.CompareTag("NorthBeachGangMember"))
                 punchHit.collider.GetComponent<EnemyHealth>().LoseHealth(damage);
 
