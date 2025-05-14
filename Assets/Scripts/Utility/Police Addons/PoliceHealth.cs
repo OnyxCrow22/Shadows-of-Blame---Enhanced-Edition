@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class PoliceHealth : MonoBehaviour
+public class PoliceHealth : MonoBehaviour, IDamageable
 {
     public float health;
     public float maxHealth;

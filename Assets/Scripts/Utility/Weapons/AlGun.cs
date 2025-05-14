@@ -54,7 +54,6 @@ public class AlGun : MonoBehaviour
             if (eHit.collider.CompareTag("Player"))
             {
                 esm.health.LoseHealth(esm.health.healthLoss);
-                Debug.Log($"You was hit by {esm.enemy}");
                 esm.health.takingDamage = true;
             }
             else

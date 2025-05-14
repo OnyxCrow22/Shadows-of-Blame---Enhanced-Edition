@@ -61,7 +61,6 @@ public class PoliceGun : MonoBehaviour
             if (eHit.collider.CompareTag("Player"))
             {
                 police.playsm.health.LoseHealth(police.playsm.health.healthLoss);
-                Debug.Log($"You was hit by {policeOfficer}");
                 police.playsm.health.takingDamage = true;
             }
             else

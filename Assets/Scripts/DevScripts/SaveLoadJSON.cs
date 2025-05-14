@@ -89,7 +89,6 @@ public class SaveLoadJSON : MonoBehaviour
     {
         string savePData = JsonUtility.ToJson(pData);
         File.WriteAllText(savePath, savePData);
-        Debug.Log("File saved to: " + savePath);
     }
 
     public void SaveGame()
@@ -98,8 +97,6 @@ public class SaveLoadJSON : MonoBehaviour
         File.WriteAllText(savePath, savePData);
 
         SaveCurrent();
-
-        Debug.Log("File saved to: " + savePath);
     }
 
     public void LoadGame()

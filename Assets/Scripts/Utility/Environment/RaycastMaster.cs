@@ -122,7 +122,6 @@ public class RaycastMaster : MonoBehaviour
                     if (OTR.GangEvidence && OTR.enabled)
                     {
                         placeEvidence = forwardHit.collider.gameObject.GetComponent<EvidencePlace>();
-                        Debug.Log("Board hit!");
                         interactKey.SetActive(true);
                         if (playsm.pControls.Player.Interact.IsPressed() && !placeEvidence.EvidencePlaced)
                         {
@@ -142,7 +141,6 @@ public class RaycastMaster : MonoBehaviour
                     if (WW.collectedNorthBeachEvidence && WW.enabled)
                     {
                         finalEvidence = forwardHit.collider.gameObject.GetComponent<WWPlaceEvidence>();
-                        Debug.Log("Final board hit!");
                         interactKey.SetActive(true);
                         if (playsm.pControls.Player.Interact.IsPressed() && !finalEvidence.EvidencePlaced)
                         {
@@ -160,7 +158,6 @@ public class RaycastMaster : MonoBehaviour
             {
                 case true:
                     newLift = forwardHit.collider.gameObject.GetComponent<Lift>();
-                    Debug.Log("Going up or down?");
                     interactKey.SetActive(true);
                     if (playsm.pControls.Player.Interact.IsPressed())
                     {
@@ -170,7 +167,7 @@ public class RaycastMaster : MonoBehaviour
                             interactKey.SetActive(false);
                             buttonPressed = true;
                             inLift = true;
-                            Debug.Log("Please stand clear of the doors. We are now going up to the 21st Floor.");
+
                         }
                         else if (newLift.atTop)
                         {
@@ -178,7 +175,6 @@ public class RaycastMaster : MonoBehaviour
                             interactKey.SetActive(false);
                             buttonPressed = true;
                             inLift = true;
-                            Debug.Log("Please stand clear of the doors. We are now going down to the ground floor.");
                         }
                     }
                     break;
@@ -230,7 +226,6 @@ public class RaycastMaster : MonoBehaviour
             {
                 case true:
                     collectEvidence = downHit.collider.gameObject.GetComponent<CollectEvidence>();
-                    Debug.Log("HIT THE EVIDENCE!");
                     interactKey.SetActive(true);
                     if (playsm.pControls.Player.Interact.IsPressed() && !collectEvidence.reading)
                     {
@@ -250,7 +245,6 @@ public class RaycastMaster : MonoBehaviour
             {
                 case true:
                     HParkEvidence = downHit.collider.gameObject.GetComponent<WWCollectHParkEvidence>();
-                    Debug.Log("HIT THE EVIDENCE!");
                     interactKey.SetActive(true);
                     if (playsm.pControls.Player.Interact.IsPressed() && !HParkEvidence.reading)
                     {
@@ -270,7 +264,6 @@ public class RaycastMaster : MonoBehaviour
             {
                 case true:
                     prescottEvidence = downHit.collider.gameObject.GetComponent<WWCollectPrescottEvidence>();
-                    Debug.Log("HIT THE EVIDENCE!");
                     interactKey.SetActive(true);
                     if (playsm.pControls.Player.Interact.IsPressed() && !prescottEvidence.reading)
                     {
@@ -290,7 +283,6 @@ public class RaycastMaster : MonoBehaviour
             {
                 case true:
                     gECollect = downHit.collider.gameObject.GetComponent<GangEvidenceCollect>();
-                    Debug.Log("Evidence hit!");
                     interactKey.SetActive(true);
                     if (playsm.pControls.Player.Interact.IsPressed() && !gECollect.isgReading)
                     {
@@ -310,7 +302,6 @@ public class RaycastMaster : MonoBehaviour
             {
                 case true:
                     northbyCollect = downHit.collider.gameObject.GetComponent<WWNorthbyGangEvidence>();
-                    Debug.Log("Evidence hit!");
                     interactKey.SetActive(true);
                     if (playsm.pControls.Player.Interact.IsPressed() && !northbyCollect.isgReading)
                     {
@@ -330,7 +321,6 @@ public class RaycastMaster : MonoBehaviour
             {
                 case true:
                     northBeachCollect = downHit.collider.gameObject.GetComponent<WWNorthBeachEvidence>();
-                    Debug.Log("Evidence hit!");
                     interactKey.SetActive(true);
                     if (playsm.pControls.Player.Interact.IsPressed() && !northBeachCollect.isgReading)
                     {
@@ -371,7 +361,6 @@ public class RaycastMaster : MonoBehaviour
                     if (playsm.pControls.Player.RevealInfo.IsPressed())
                     {
                         roads.StartCoroutine(roads.RoadDisplay(true));
-                        Debug.Log("I hit " + roads.roadName);
                     }
                     else
                     {
@@ -389,7 +378,6 @@ public class RaycastMaster : MonoBehaviour
                     districts = nameHit.collider.gameObject.GetComponent<DistrictCheck>();
                     districts.currentDistrict.text = districts.districtName;
                     inDistrict = true;
-                    Debug.Log("Welcome to " + districts.districtName);
                     break;
                 case false:
                     inDistrict = false;
@@ -402,7 +390,6 @@ public class RaycastMaster : MonoBehaviour
                 case true:
                     vehicles = nameHit.collider.gameObject.GetComponent<VehicleCheck>();
                     vehicles.currentVehicle.text = vehicles.vehicleName;
-                    Debug.Log("You are currently driving" + vehicles.currentVehicle);
                     break;
                 case false:
                     if (vehicles != null) vehicles.currentVehicle.text = "";

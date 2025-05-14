@@ -31,19 +31,15 @@ public class PunchSystem : MonoBehaviour
         float punchRange = 8;
         Ray punchRay = new Ray(FOV.transform.position, FOV.transform.forward);
         Debug.DrawRay(FOV.transform.position, FOV.transform.forward, Color.cyan);
-        if (Physics.Raycast(punchRay, out punchHit, punchRange, Enemy) || Physics.Raycast(punchRay, out punchHit, punchRange, NPC))
+
+        if (Physics.Raycast(punchRay, out punchHit, punchRange, Enemy | NPC))
         {
-            if (punchHit.collider.CompareTag("SaintMarysGangMember") || punchHit.collider.CompareTag("SaintMarysGangLeader") || punchHit.collider.CompareTag("NorthbyGangMember") || punchHit.collider.CompareTag("NorthbyGangLeader") || punchHit.collider.CompareTag("NorthBeachGangMember"))
-                punchHit.collider.GetComponent<EnemyHealth>().LoseHealth(damage);
-
-            if (punchHit.collider.CompareTag("FemaleNPC") || (punchHit.collider.CompareTag("MaleNPC")))
-                Debug.Log("WHACK!");
-                punchHit.collider.GetComponent<NPCHealth>().LoseHealth(damage);
-
-            if (punchHit.collider.CompareTag("Police"))
-                punchHit.collider.GetComponent<PoliceHealth>().LoseHealth(damage);
-
-            AudioManager.manager.Play("Punch");
+            IDamageable damageable = punchHit.collider.GetComponent<IDamageable>();
+            if (damageable != null)
+            {
+                damageable.LoseHealth(damage);
+                AudioManager.manager.Play("Punch");
+            }
         } 
     }
 }
