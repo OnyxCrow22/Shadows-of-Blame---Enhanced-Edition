@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml;
 using TMPro;
 using UnityEngine;
 
 public class OpeningCutsceneDialogue : MonoBehaviour
 {
-    public TextAsset Newscaster1, Newscaster2, Newscaster3;
+    public TextAsset sob_openSC;
     public TextMeshProUGUI dialogueText;
 
     private void Start()
@@ -15,26 +16,21 @@ public class OpeningCutsceneDialogue : MonoBehaviour
 
     public IEnumerator PlayDialogue()
     {
-        string[] newscasterLinesA = Newscaster1.text.Split("\n");
-        string[] newscasterLinesB = Newscaster2.text.Split("\n");
-        string[] newscasterLinesC = Newscaster3.text.Split("\n");
+        XmlDocument sob_script = new XmlDocument();
+        sob_script.LoadXml(sob_openSC.text);
 
-        foreach (string line in newscasterLinesA)
-        {
-            dialogueText.text = line.Trim();
-            yield return new WaitForSeconds(5);
-        }
+        XmlNodeList scriptNodes = sob_script.SelectNodes("/scripts/script");
 
-        foreach (string line in newscasterLinesB)
+        foreach (XmlNode sNode in scriptNodes)
         {
-            dialogueText.text = line.Trim();
-            yield return new WaitForSeconds(5);
-        }
+            XmlNodeList lineNodes = sNode.SelectNodes("line");
 
-        foreach (string line in newscasterLinesC)
-        {
-            dialogueText.text = line.Trim();
-            yield return new WaitForSeconds(5);
+            foreach (XmlNode lNode in lineNodes)
+            {
+                string linesText = lNode.InnerText.Trim();
+                dialogueText.text = linesText;
+                yield return new WaitForSeconds(5);
+            }
         }
     }
 }

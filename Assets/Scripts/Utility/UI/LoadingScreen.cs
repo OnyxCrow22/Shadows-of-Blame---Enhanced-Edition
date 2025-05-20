@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Xml;
 using TMPro;
+using System;
 
 public class LoadingScreen : MonoBehaviour
 {
@@ -14,6 +16,11 @@ public class LoadingScreen : MonoBehaviour
     public Slider loadingBar;
     public TextMeshProUGUI tipsText;
     public TextAsset tips;
+
+    private void Awake()
+    {
+        SetRandomInformationTip();
+    }
 
     public void LoadLevel(string levelToLoad)
     {
@@ -32,7 +39,6 @@ public class LoadingScreen : MonoBehaviour
         {
             float progressVal = Mathf.Clamp01(loadOp.progress / 0.9f);
             loadingBar.value = progressVal;
-            SetRandomInformationTip();
             yield return null;
             yield return new WaitForSeconds(2);
         }
@@ -40,8 +46,26 @@ public class LoadingScreen : MonoBehaviour
 
     void SetRandomInformationTip()
     {
-        string[] tipsLines = tips.text.Split("\n");
-        int infoRand = Random.Range(0, tipsLines.Length);
-        tipsText.text = tipsLines[infoRand];
+        XmlDocument tipsDoc = new XmlDocument();
+        tipsDoc.LoadXml(tips.text);
+
+        XmlNodeList scriptNodes = tipsDoc.SelectNodes("/scripts/script");
+
+        foreach (XmlNode sNode in scriptNodes)
+        {
+            XmlNodeList lineNodes = sNode.SelectNodes("line");
+
+            List<String> tipsLines = new List<string>();
+
+            foreach (XmlNode lNode in lineNodes)
+            {
+                tipsLines.Add(lNode.InnerText.Trim());
+            }
+            if (tipsLines.Count > 0)
+            {
+                int infoRand = UnityEngine.Random.Range(0, tipsLines.Count);
+                tipsText.text = tipsLines[infoRand];
+            }
+        }
     }
 }

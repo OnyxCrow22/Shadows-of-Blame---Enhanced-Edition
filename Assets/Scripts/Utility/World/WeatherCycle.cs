@@ -5,26 +5,28 @@ public class WeatherCycle : MonoBehaviour
     [Header("Weather Types")]
     public GameObject sunny;
     public GameObject partlyCloudy;
-    /*
     public GameObject cloudy;
     public GameObject fog;
     public GameObject rain;
     public GameObject thunderStorm;
-    */
 
     public bool isSunny = false;
     public bool isPartCloud = false;
-    /*
     public bool isCloudy = false;
     public bool isFoggy = false;
     public bool isRaining = false;
     public bool isThundering = false;
-    */
+
     public float timer = 0;
     public float weatherChange;
     public int randomSwitch;
-    public enum weatherState { sunny, partlyCloudy, /*raining, thundering, cloudy, foggy*/}
+    public enum weatherState { sunny, partlyCloudy, raining, thundering, cloudy, foggy}
     public weatherState currentState;
+
+    public void Start()
+    {
+        DisableWeather();
+    }
 
     /// <summary>
     /// Update the timer every frame?
@@ -33,7 +35,7 @@ public class WeatherCycle : MonoBehaviour
     {
         timer += Time.deltaTime;
 
-        if (timer >= Random.Range(10, 240))
+        if (timer >= Random.Range(30, 240))
         {
             NextWeather();
             timer = 0;
@@ -63,7 +65,6 @@ public class WeatherCycle : MonoBehaviour
                     isSunny = false;
                     break;
                 }
-                /*
             case weatherState.cloudy:
                 {
                     break;
@@ -72,15 +73,25 @@ public class WeatherCycle : MonoBehaviour
                 {
                     break;
                 }
+                
             case weatherState.thundering:
                 {
+                    thunderStorm.SetActive(true);
+                    sunny.SetActive(false);
+                    currentState = weatherState.thundering;
+                    isThundering = true;
+                    isSunny = false;
                     break;
                 }
             case weatherState.foggy:
                 {
+                    fog.SetActive(true);
+                    sunny.SetActive(false);
+                    currentState = weatherState.foggy;
+                    isFoggy = true;
+                    isSunny = false;
                     break;
                 }
-                */
             default:
                 {
                     break;
@@ -95,21 +106,17 @@ public class WeatherCycle : MonoBehaviour
     {
         sunny.SetActive(false);
         partlyCloudy.SetActive(false);
-        /*
-        cloudy.SetActive(false);
-        rain.SetActive(false);
+       // cloudy.SetActive(false);
+       // rain.SetActive(false);
         thunderStorm.SetActive(false);
         fog.SetActive(false);
-        */
 
         isSunny = false;
         isPartCloud = false;
-        /*
         isCloudy = false;
         isRaining = false;
         isThundering = false;
         isFoggy = false;
-        */
     }
 
     /// <summary>

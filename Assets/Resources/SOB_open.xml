@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scripts>
+    <script id="sob_open_1" newscaster="1">
+        <line>BREAKING NEWS: Incident declared at prestigious university.</line>
+        <line>The Westral Institute of Technology has declared an emergency after noticing that one of their prototypes has been stolen.</line> 
+        <line>The university vice-chancellor, Daniel Ramston, urges anyone who thinks they know who stole the prototype to return it to their campus.</line> 
+        <line>The prototype is believed to be a new autonomous car designed by Reina</line> 
+        <line>that was going to be unveiled at the Technology Summit of the Atlantic North Nations (TSANN) next month in Everglade City at the Euclidean Expo Hall</line>
+        <line>Organisers now say that the expo may be scaled back, or cancelled, due to security concerns.</line>
+        <line>So far, the police have not made any arrests, but they currently believe a 26-year-old male called Harrison Felton might be responsible for the theft.</line> 
+        <line>Felton is also wanted by Westral Police after attempting to rob the Bank of the Westral Federation in the Financial District of West Insbury.</line>
+        <line>The public are being urged to exercise caution around him.</line>
+    </script>
+    <script id="sob_open_2" newscaster="2">
+        <line>In other news, the government has announced that travel between Westeria and Saint Marys Islands will be restricted from tomorrow.</line>
+        <line>The Temporary Travel Ban, or TTB, will come into effect at midnight, and it will infer a curfew, between 21:00, and 06:00.</line> 
+        <line>During this curfew, citizens are reminded not to travel unless absolutely necessary.</line> 
+        <line>Checkpoints are being installed on the Frank H. Beckett Bridge, and in the Mayrise Tunnel.</line> 
+        <line>Roadblocks are being installed around Halifax Park, and West Insbury International Airport.</line> 
+        <line>The Port of West Insbury will close to passenger traffic, and all rail travel between Saint Mary's and Westeria will be suspended.</line> 
+        <line>The right to assembly will also be revoked.</line> 
+        <line>Anyone on the streets after 9 pm, will be treated as potential hostiles.</line> 
+        <line>The government is urging all citizens to remain indoors during the curfew.</line>
+
+            <line>Many islands and human rights groups have voiced disapproval at the TTB, as the ban will mean that people cannot travel across the country, 
+                but the government has listed people who are exempt from the ban. The islands of Allerton and Baxton are not under the ban.</line>
+            <line>The Republic of Rey Del Sur has already announced that their embassy will close, until the TTB is lifted.</line> 
+            <line>Similarly, the Northern Republic of Garcia has also announced that their embassy will remain closed indefinitely.</line>
+            <line>Many other countries are relocating to non-restricted islands.</line> 
+            <line>To view the full list, the government is urging people to go to www.gov.wf/travel-restriction/exceptions/.</line>
+            </script>
+    <script id="sob_open_3" newscaster="3">
+            <line>The mayor of Allerton Bay has criticised the Westrian government for acting too harshly in response to a travel ban imposed today.</line> 
+            <line>The ban, which came into force from yesterday, now means that most of the population is forbidden from travelling between islands via bridges, tunnels, ferries, railways and airports.</line>
+            <line>Here is what the Mayor of Allerton Bay, Susan Keswick, had to say about the government's TTB:</line>
+                <line speaker="susanKeswick">It is ridiculous! Why would you ban most of the country from travelling around, 
+                    just because one person robbed from one of the most technologically advanced universities in the country, and attempted to rob one of the biggest banks in the country?</line> 
+                    <line>We have gangs that are rife in the country, but nothing has been done about them!</line> 
+                    <line>I have constituents who fear even stepping foot in some districts!!</line>
+                    <line>I know that gangs are rife in West Insbury, but I do not see Westral Police paying any attention to them at all!</line> 
+                    <line>I've seen drug deals openly happening on the streets, with NO police in sight!</line>
+                    <line>We are supposed to be protected by the police, but this is too far in terms of protecting the country! I dare say this may be borderline mollycoddling.</line>
+
+                <line>In response to the comments made by mayor Keswick, the commissioner of Westral Police issued a statement on the situation:</line>
+
+                <line speaker="markRowley">Due to the security risk to the citizens of the Westral Federation, The government was advised to lock down travel between the islands, until police can identify what happened.</line> 
+                <line>While I can understand the comments made by Miss Keswick, I would like to remind Miss Keswick that her town falls outside of the TTB, and people are able to freely travel around the islands of Allerton and Baxton.</line> 
+                <line>The TTB only applies to Westeria and Saint Mary's, however, there is a country-wide ban on domestic travel from air and sea.</line> 
+                <line>Airports and ports across the Westral Federation will remain open throughout the TTB, but no domestic flights or ferries will be running.</line> 
+                <line>Rail services will continue to run across the rest of the country, except for between West Insbury, and Saint Mary's or West Insbury and Haddock Bay.</line>
+    </script>
+</scripts>
