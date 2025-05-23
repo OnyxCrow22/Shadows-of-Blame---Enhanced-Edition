@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<vehicles>
+        <vehicle id="olympiaEntourage">
+            <description>Constructed in 2015 in Everglade City, the all new Olympia Entourage can tackle even the harshest of terrains. Built to sustain bumpy roads, this vehicle is also used by security
+                to quickly respond to any threats.
+            </description>
+            <damageRating>5</damageRating>
+            <topSpeed>145 mph</topSpeed>
+            <class>SUVs</class>
+            <cost>£10,000</cost>
+            <accleration>5</accleration>
+            <handling>4.5</handling>
+            <brakeHorsePower>560</brakeHorsePower>
+    </vehicle>
+    <vehicle id="olympiaContage">
+        <description>Developed in 2021, the Olympia Contage is favored by those in power, and those who have lots of money to throw away. It favors urban roads and motorways over country lanes.
+            One of the cars was used in the annual TSANN summit, carrying the prime minister of the Westral Federation, Marcus Farnaby. Today, it is favored by the La Fontera gang,
+        </description>
+        <damageRating>4.5</damageRating>
+        <topSpeed>160 mph</topSpeed>
+        <class>Sedans</class>
+        <cost>£55,000</cost>
+        <acceleration>3.5</acceleration>
+        <handling>4</handling>
+        <brakeHorsePower>700</brakeHorsePower>
+    </vehicle>
+    <vehicle id="olympiaSentinel">
+        <description>Developed by the Westral Institute of Technology, in collaboration with Reina, the Sentinel is not a force to be reckoned with. Breaking speed records on the Everglade Expressway, it is
+            a prototype that can easily escape any police. The Sentinel is a supercar, that has not only looks, but class. Only one has been developed so far, with plans to roll out the car in 2029.
+        </description>
+        <cost>£2,100,000</cost>
+        <damageRating>3</damageRating>
+        <topSpeed>240 mph</topSpeed>
+        <class>Supercars</class>
+        <accleration>5</accleration>
+        <handling>3</handling>
+        <brakeHorsePower>1250</brakeHorsePower>
+    </vehicle>
+</vehicles>
